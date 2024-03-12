@@ -1,0 +1,93 @@
+Program.Sub.ScreenSU.Start
+Gui.Form_Set_Serial..Create
+Gui.Form_Set_Serial..Caption("Set Serial Number")
+Gui.Form_Set_Serial..Size(4275,1590)
+Gui.Form_Set_Serial..MinX(0)
+Gui.Form_Set_Serial..MinY(0)
+Gui.Form_Set_Serial..Position(0,0)
+Gui.Form_Set_Serial..BackColor(-2147483633)
+Gui.Form_Set_Serial..MousePointer(0)
+Gui.Form_Set_Serial..Event(UnLoad,Form_Set_Serial_UnLoad)
+Gui.Form_Set_Serial.lblSerial.Create(Label,"Enter Serial Number",True,1935,255,0,105,165,True,0,"Arial",8,-2147483633,0)
+Gui.Form_Set_Serial.txtSerial.Create(TextBox,"",True,3750,300,0,105,390,True,0,"Arial",8,-2147483643,1)
+Gui.Form_Set_Serial.txtSerial.MaxLength(30)
+Gui.Form_Set_Serial.cmdSubmit.Create(Button)
+Gui.Form_Set_Serial.cmdSubmit.Size(855,375)
+Gui.Form_Set_Serial.cmdSubmit.Position(105,765)
+Gui.Form_Set_Serial.cmdSubmit.Caption("Submit")
+Gui.Form_Set_Serial.cmdSubmit.Event(Click,cmdSubmit_Click)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+		F.Intrinsic.Control.Case(41601)
+			V.Passed.000076.Set("Set Serial")
+			
+		F.Intrinsic.Control.Case(41602)
+			Gui.Form_Set_Serial.txtSerial.Text(V.Passed.000008)
+			Gui.Form_Set_Serial..Show
+			
+		F.Intrinsic.Control.CaseElse
+			F.Intrinsic.Control.CallSub(Form_Set_Serial_Unload)
+			
+	F.Intrinsic.Control.EndSelect
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_4729_Set_Serial.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(Form_Set_Serial_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.Form_Set_Serial_UnLoad.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+
+	F.Intrinsic.Control.End
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_4729_Set_Serial.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(Form_Set_Serial_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.Form_Set_Serial_UnLoad.End
+
+Program.Sub.cmdSubmit_Click.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sData.Declare(String,"")
+	
+	V.Local.sData.Set(V.Screen.Form_Set_Serial!txtSerial.Text)
+	
+	V.Passed.000008.Set(V.Local.sData.Trim)
+	
+	F.Intrinsic.Control.CallSub(Form_Set_Serial_Unload)
+	
+	F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_4729_Set_Serial.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(Form_Set_Serial_Unload)
+	F.Intrinsic.Control.EndIf
+Function.Intrinsic.Control.EndTry
+Program.Sub.cmdSubmit_Click.End
+
+
+
+
