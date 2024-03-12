@@ -1,0 +1,81 @@
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sPart.Declare(String)
+	V.Local.bFileExists.Declare(Boolean)
+	V.Local.sFilePath.Declare(String)
+	V.Local.sFileName.Declare(string)
+	V.Local.sSql.Declare(String)
+	
+	'AJC 09/03/2019
+	'The script will update the weight for the drop parts created, during drop processing, to ensure it matches the weight_per_foot. 
+	'The script was written to provide an alternate to update the weight, without changing the core code is JB0075GI
+	
+	
+	F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+	
+	'Fires on the Add Part hook to create the file
+	F.Intrinsic.Control.If(V.Caller.Hook,=,42701)
+		V.Local.sPart.Set(V.Passed.Part)
+		'Builds the file name with the company code and user id to make sure the txt file doesn't get overwritten by someone else creating drop parts
+		F.Intrinsic.String.Build("{0}\{1}{2}PartName.txt",V.Caller.FilesDir,V.Caller.CompanyCode,V.Caller.User,V.Local.sFileName)
+		'Checks to see if the file exists
+		F.Intrinsic.File.Exists(V.Local.sFileName,V.Local.bFileExists)
+		
+		'If the file exists when the hook fires, it will delete it to ensure the correct part is written. It will delete the file and then write the new part number
+		F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+			F.Intrinsic.File.DeleteFile(V.Local.sFileName)
+			F.Intrinsic.File.String2File(V.Local.sFileName,V.Local.sPart)
+		F.Intrinsic.Control.Else
+			'the part number is written to a .txt file to be used later
+			F.Intrinsic.File.String2File(V.Local.sFileName,V.Local.sPart)
+		F.Intrinsic.Control.EndIf
+		
+	'Then fires on the POST-SAVE hook to update the LBS for the part
+	F.Intrinsic.Control.ElseIf(V.Caller.Hook,=,28842)
+		'checks to see if the file exists
+		F.Intrinsic.String.Build("{0}\{1}{2}PartName.txt",V.Caller.FilesDir,V.Caller.CompanyCode,V.Caller.User,V.Local.sFileName)
+		F.Intrinsic.File.Exists(V.Local.sFileName,V.Local.bFileExists)
+		
+		F.Intrinsic.Control.If(V.Local.bFileExists,=,True)
+			F.Intrinsic.File.File2String(V.Local.sFileName,V.Local.sPart)
+			'Updates the weight on inventory_mst2 to match the weight per foot that was entered when the drop part was created
+			F.Intrinsic.String.Build("UPDATE INVENTORY_MST2 SET LBS = WT_PER_FOOT WHERE PART = '{0}'",v.Local.sPart,V.Local.sSql)
+			F.ODBC.Connection!con.Execute(V.Local.sSql)
+			'it will delete the file after it's done using it
+			F.Intrinsic.File.DeleteFile(V.Local.sFileName)
+		F.Intrinsic.Control.EndIf
+	'If it fires on any other hook, the script will end	
+	F.Intrinsic.Control.Else
+		F.Intrinsic.Control.CallSub(Exit)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.Control.CallSub(Exit)
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_4729_Weight_Update.g2u", V.Ambient.NewLine, V.Ambient.CurrentSubroutine, V.Ambient.ErrorNumber, V.Ambient.ErrorDescription, V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(Exit)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.Exit.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	F.ODBC.Connection!con.Close
+	
+	F.Intrinsic.Control.End
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_4729_Weight_Update.g2u", V.Ambient.NewLine, V.Ambient.CurrentSubroutine, V.Ambient.ErrorNumber, V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.Exit.End
