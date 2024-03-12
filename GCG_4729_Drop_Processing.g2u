@@ -1,0 +1,368 @@
+Program.Sub.Preflight.Start
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	V.Local.sJobSuffix.Declare(String,"")
+	V.Local.i.Declare(Long,0)
+	V.Local.iCount.Declare(Long,0)
+	V.Local.sTemp.Declare(String,"")
+	V.Local.sRet.Declare(String,"")
+	V.Local.sCol.Declare(String,"")
+	V.Local.sDataType.Declare(String,"")
+	V.Local.sDir.Declare(String,"")
+	V.Local.bCheck.Declare(Boolean,False)
+	V.Local.sJob.Declare(String,"")
+	V.Local.sSuffix.Declare(String,"")
+	V.Local.sSql.Declare(String,"")
+	V.Local.sPart.Declare(String,"")
+	V.Local.sLink.Declare(String,"")
+	V.Local.iID.Declare(Long,0)
+	V.Local.iIdentity.Declare(Long,0)
+	V.Local.sNewLink.Declare(String,"")
+	
+	F.Intrinsic.Control.SelectCase(V.Caller.Hook)
+		F.Intrinsic.Control.Case(28820)
+			'setting Job Suffix to Global Variable
+			'V.passed.000002 - WO
+			'V.passed.000003 - Suffix
+			F.Intrinsic.String.Build("{0}-{1}",V.Passed.000002,V.Passed.000003,V.Local.sJobSuffix)
+			V.Passed.Global.Set(V.Local.sJobSuffix)
+		
+		'pre save
+		F.Intrinsic.Control.Case(29630)
+		
+			'v.passed.000004 - Part
+			'Z10 record from Item History for Lot Bin Heat Serial
+			'Add Record To Custom Table with additional Info from Previous Part
+			
+			F.Intrinsic.String.Build("{0}{1}{2}",V.Passed.Global,"*!*",v.passed.000004,V.Local.sRet)
+			F.Intrinsic.String.Build("{0}\Custom",V.Caller.GlobalDir,V.Local.sDir)
+			F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bCheck)
+			F.Intrinsic.Control.If(V.Local.bCheck,=,False)
+				F.Intrinsic.File.CreateDir(V.Local.sDir)
+			F.Intrinsic.Control.EndIf
+			F.Intrinsic.String.Build("{0}\4729",V.Local.sDir,V.Local.sDir)
+			F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bCheck)
+			F.Intrinsic.Control.If(V.Local.bCheck,=,False)
+				F.Intrinsic.File.CreateDir(V.Local.sDir)
+			F.Intrinsic.Control.EndIf
+			F.Intrinsic.String.Build("{0}\Drop",V.Local.sDir,V.Local.sDir)
+			F.Intrinsic.File.DirExists(V.Local.sDir,V.Local.bCheck)
+			F.Intrinsic.Control.If(V.Local.bCheck,=,False)
+				F.Intrinsic.File.CreateDir(V.Local.sDir)
+			F.Intrinsic.Control.EndIf
+
+			F.Intrinsic.String.Build("{0}\{1}{2}Drop.txt",V.Local.sDir,V.Caller.User,V.Caller.CompanyCode,V.Local.sDir)
+			F.Intrinsic.File.Exists(V.Local.sDir,V.Local.bCheck)
+			F.Intrinsic.Control.If(V.Local.bCheck)
+				F.Intrinsic.Control.If(V.Passed.Global,=,"-")
+					F.Intrinsic.File.DeleteFile(V.Local.sDir)
+				F.Intrinsic.Control.Else
+					F.Intrinsic.File.File2String(V.Local.sDir,V.Local.sTemp)
+					F.Intrinsic.String.Build("{0}{1}{2}",V.Local.sTemp,V.Ambient.NewLine,V.Local.sRet,V.Local.sRet)
+				F.Intrinsic.Control.EndIf
+			F.Intrinsic.Control.EndIf
+			
+			F.Intrinsic.File.String2File(V.Local.sDir,V.Local.sRet)
+			
+		'Post save hook
+		F.Intrinsic.Control.Case(28842)
+			
+			F.Intrinsic.String.Build("{0}\Custom\4729\Drop\{1}{2}Drop.txt",V.Caller.GlobalDir,V.Caller.User,V.Caller.CompanyCode,V.Local.sDir)
+			
+			F.Intrinsic.File.Exists(V.Local.sDir,V.Local.bCheck)
+			F.Intrinsic.Control.If(V.Local.bCheck)
+				F.Intrinsic.File.File2String(V.Local.sDir,V.Local.sRet)
+				F.ODBC.Connection!Con.OpenCompanyConnection
+				F.Intrinsic.String.Split(V.Local.sRet,V.Ambient.NewLine,V.Local.sTemp)
+				F.Intrinsic.Control.For(V.Local.iCount,0,V.Local.sTemp.UBound,1)
+					F.Intrinsic.String.Split(V.Local.sTemp(V.Local.iCount),"*!*",V.Local.sRet)
+					V.Local.sRet.RedimPreserve(0,1)
+					V.Local.sPart.Set(V.Local.sRet(1).Trim)
+					F.Intrinsic.String.Split(V.Local.sRet(0),"-",V.Local.sJob)
+					V.Local.sJob.RedimPreserve(0,1)
+					V.Local.sSuffix.Set(V.Local.sJob(1))
+					
+					F.Intrinsic.String.Build("Select Part, Location , lot, Bin, Heat, Serial_Number From V_Item_History Where Job = '{0}' and Suffix = '{1}' and Part = '{2}' and Code_Transaction = 'Z10' Order by Time_Item_History DESC",V.Local.sJob.Trim,V.Local.sSuffix.Trim,V.Local.sPart.Trim,V.Local.sSql)
+					F.Intrinsic.Control.If(V.DataTable.DropPart.Exists)
+						f.Data.DataTable.Close("DropPart")
+					F.Intrinsic.Control.EndIf
+					
+					F.Data.DataTable.CreateFromSQL("DropPart","con",V.Local.sSql,True)
+					
+					F.Intrinsic.Control.If(V.DataTable.DropPart.RowCount--,<>,-1)
+						F.Intrinsic.String.Build("Select Part, Location , lot, Bin, Heat, Serial_Number From V_Item_History Where Job = '{0}' and Suffix = '{1}' and Heat = '{2}' and Serial_Number = '{3}' and Code_Transaction = 'J55' Order by Time_Item_History",V.Local.sJob.Trim,V.Local.sSuffix.Trim,V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Heat!FieldValTrim,V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Serial_Number!FieldValTrim,V.Local.sSql)
+					
+						V.Local.sLink.Redim(0,5)
+						F.Intrinsic.Control.If(V.DataTable.Part.Exists)
+							F.Data.DataTable.Close("Part")
+						F.Intrinsic.Control.EndIf
+						
+						F.Data.DataTable.CreateFromSQL("Part","con",V.Local.sSql,True)
+					
+						F.Intrinsic.Control.If(V.DataTable.Part.RowCount--,<>,-1)
+							'part
+							V.Local.sLink(0).Set(V.DataTable.Part(V.DataTable.Part.RowCount--).Part!FieldValTrim)
+							'loc
+							V.Local.sLink(1).Set(V.DataTable.Part(V.DataTable.Part.RowCount--).Location!FieldValTrim)
+							'lot
+							V.Local.sLink(2).Set(V.DataTable.Part(V.DataTable.Part.RowCount--).lot!FieldValTrim)
+							'bin
+							V.Local.sLink(3).Set(V.DataTable.Part(V.DataTable.Part.RowCount--).Bin!FieldValTrim)
+							'heat
+							V.Local.sLink(4).Set(V.DataTable.Part(V.DataTable.Part.RowCount--).Heat!FieldValTrim)
+							'serial
+							V.Local.sLink(5).Set(V.DataTable.Part(V.DataTable.Part.RowCount--).Serial_Number!FieldValTrim)
+							F.Intrinsic.Control.If(V.DataTable.PartDim.Exists)
+								F.Data.DataTable.Close("PartDim")
+							F.Intrinsic.Control.EndIf
+							F.Intrinsic.String.Build("Select AutoNum, Part, Description, Lot, Bin, InventoryNumber, Serial, Grade, Thickness, Slab, Bin, Notes, WhseLoc, PO, PO_Line, Receiver, Vendor, Mill, CarTruck, BargeNo, CE, C, MN, P, S, SI, CU, NI, CR, MO, SN, AL, TI, V, CB, CostLB, FreightLB, TotalCost, TotalCostLB, LastDateTime, Validate, Length, Width, TheoreticalWeight, ActualWeight, Overwrite From GCG_4729_Part_Dim Where Part = '{0}' and InventoryNumber = '{1}' and Serial = '{2}'",V.DataTable.Part(V.DataTable.Part.RowCount--).Part!FieldValTrim,V.DataTable.Part(V.DataTable.Part.RowCount--).Heat!FieldValTrim,V.DataTable.Part(V.DataTable.Part.RowCount--).Serial_Number!FieldValTrim,V.Local.sSql)
+							F.Data.DataTable.CreateFromSQL("PartDim","con",V.Local.sSql,True)
+					
+							F.Intrinsic.Control.If(V.DataTable.PartDim.RowCount--,<>,-1)
+								F.Intrinsic.String.Build("Select Length, Width, Wt_Per_Foot From V_Inventory_Mst2 Where Part = '{0}'",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Part!FieldValTrim,V.Local.sSql)
+								F.Intrinsic.Control.If(V.DataTable.LWW.Exists)
+									F.Data.DataTable.Close("LWW")
+								F.Intrinsic.Control.EndIf
+								F.Data.DataTable.CreateFromSQL("LWW","con",v.Local.sSql,True)
+								
+								F.Intrinsic.Control.If(V.DataTable.LWW.RowCount--,<>,-1)
+									F.Data.DataTable.SetValue("PartDim",-1,"AutoNum",V.Ambient.DBNULL,"Part",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Part!FieldValTrim,"Lot",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Lot!FieldValTrim,"Bin",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Bin!FieldValTrim,"Length",V.DataTable.LWW(V.DataTable.LWW.RowCount--).Length!FieldVal,"Width",V.DataTable.LWW(V.DataTable.LWW.RowCount--).Width!FieldVal,"TheoreticalWeight",V.DataTable.LWW(V.DataTable.LWW.RowCount--).Wt_Per_Foot!FieldVal,"ActualWeight",V.DataTable.LWW(V.DataTable.LWW.RowCount--).Wt_Per_Foot!FieldVal,"FreightLB",V.Ambient.DBNULL,"Overwrite",False)
+								F.Intrinsic.Control.Else
+									F.Data.DataTable.SetValue("PartDim",-1,"AutoNum",V.Ambient.DBNULL,"Part",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Part!FieldValTrim,"Lot",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Lot!FieldValTrim,"Bin",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Bin!FieldValTrim,"Length","0","Width","0","TheoreticalWeight","0","ActualWeight","0","FreightLB",V.Ambient.DBNULL,"Overwrite",False)
+								F.Intrinsic.Control.EndIf
+								
+								F.Intrinsic.Control.If(V.DataTable.Desc.Exists)
+									F.Data.DataTable.Close("Desc")
+								F.Intrinsic.Control.EndIf
+								F.Intrinsic.String.Build("Select Description From V_Inventory_Mstr Where Part = '{0}'",V.DataTable.DropPart(V.DataTable.DropPart.RowCount--).Part!FieldValTrim,V.Local.sSql)
+								F.Data.DataTable.CreateFromSQL("Desc","con",V.Local.sSql,True)
+								F.Intrinsic.Control.If(V.DataTable.Desc.RowCount--,<>,-1)
+									F.Data.DataTable.SetValue("PartDim",-1,"Description",V.DataTable.Desc(V.DataTable.Desc.RowCount--).Description!FieldValTrim)
+								F.Intrinsic.Control.EndIf
+								
+								'check if Thickness width length theoreticalweight actualweight, CE, C, MN, P, S, SI, CU, NI, CR, MO, SN, AL, TI, V, CB, CostLB, TotalCost, TotalCostLB is blank if so set to null
+								F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.PartDim.RowCount--,1)
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).Thickness!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"Thickness",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).width!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"width",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).Length!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"Length",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).TheoreticalWeight!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"TheoreticalWeight",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).ActualWeight!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"ActualWeight",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).CE!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"CE",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).C!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"C",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).MN!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"MN",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).P!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"P",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).S!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"S",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).SI!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"SI",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).CU!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"CU",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).NI!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"NI",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).CR!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"CR",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).MO!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"MO",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).SN!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"SN",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).AL!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"AL",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).TI!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"TI",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).V!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"V",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).CB!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"CB",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).CostLB!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"CostLB",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).TotalCost!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"TotalCost",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.If(V.DataTable.PartDim(V.Local.i).TotalCostLB!FieldValString,=,"")
+										F.Data.DataTable.SetValue("PartDim",V.Local.i,"TotalCostLB",V.Ambient.DBNULL)
+									F.Intrinsic.Control.EndIf
+								F.Intrinsic.Control.Next(V.Local.i)
+								
+								F.Data.DataTable.SaveToDB("PartDim","Con","GCG_4729_Part_Dim","",128,"AutoNum@!@AutoNum*!*Part@!@Part*!*Lot@!@Lot*!*Bin@!@Bin*!*InventoryNumber@!@InventoryNumber*!*Serial@!@Serial*!*Grade@!@Grade*!*Thickness@!@Thickness*!*Slab@!@Slab*!*Bin@!@Bin*!*Notes@!@Notes*!*WhseLoc@!@WhseLoc*!*PO@!@PO*!*PO_Line@!@PO_Line*!*Receiver@!@Receiver*!*Vendor@!@Vendor*!*Mill@!@Mill*!*CarTruck@!@CarTruck*!*BargeNo@!@BargeNo*!*CE@!@CE*!*C@!@C*!*MN@!@MN*!*P@!@P*!*S@!@S*!*SI@!@SI*!*CU@!@CU*!*NI@!@NI*!*CR@!@CR*!*MO@!@MO*!*SN@!@SN*!*AL@!@AL*!*TI@!@TI*!*V@!@V*!*CB@!@CB*!*CostLB@!@CostLB*!*TotalCost@!@TotalCost*!*TotalCostLB@!@TotalCostLB*!*LastDateTime@!@LastDateTime*!*Validate@!@Validate*!*Length@!@Length*!*Width@!@Width*!*TheoreticalWeight@!@TheoreticalWeight*!*ActualWeight@!@ActualWeight*!*FreightLB@!@FreightLB*!*Overwrite@!@Overwrite*!*Description@!@Description")
+								
+								'copying doc links from org part to drop part.
+								F.Intrinsic.String.RPad(V.Local.sLink(0)," ",20,V.Local.sLink(0))
+								F.Intrinsic.String.RPad(V.Local.sLink(1)," ",2,V.Local.sLink(1))
+								F.Intrinsic.String.RPad(V.Local.sLink(2)," ",15,V.Local.sLink(2))
+								F.Intrinsic.String.RPad(V.Local.sLink(3)," ",6,V.Local.sLink(3))
+								F.Intrinsic.String.RPad(V.Local.sLink(4)," ",15,V.Local.sLink(4))
+								F.Intrinsic.String.Build("{0}{1}{2}{3}{4}{5}",V.Local.sLink(0),V.Local.sLink(1),V.Local.sLink(2),V.Local.sLink(3),V.Local.sLink(4),V.Local.sLink(5).Trim,V.Local.sLink)
+								
+								F.Global.DocumentControl.GetLinkID(V.Local.sLink,31,V.Local.iID)
+								F.Intrinsic.Control.If(V.Local.iID,<>,-1)
+									F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.PartDim.RowCount--,1)
+										V.Local.sNewLink.Redim(0,4)
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).Part!FieldValTrim," ",22,V.Local.sNewLink(0))
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).Lot!FieldValTrim," ",15,V.Local.sNewLink(1))
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).Bin!FieldValTrim," ",6,V.Local.sNewLink(2))
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).InventoryNumber!FieldValTrim," ",15,V.Local.sNewLink(3))
+										V.Local.sNewLink(4).Set(V.DataTable.PartDim(V.Local.i).Serial!FieldValTrim)
+										F.Intrinsic.String.Build("{0}{1}{2}{3}{4}",V.Local.sNewLink(0),V.Local.sNewLink(1),V.Local.sNewLink(2),V.Local.sNewLink(3),V.Local.sNewLink(4),V.Local.sNewLink)
+										F.Global.DocumentControl.GetLinkID(V.Local.sNewLink,31,V.Local.iIdentity)
+										F.Intrinsic.Control.If(V.Local.iIdentity,=,-1)
+											F.Global.DocumentControl.CreateReference(V.Local.sNewLink,31,V.Local.iIdentity)
+										F.Intrinsic.Control.EndIf
+										
+										F.Intrinsic.String.Build("Select * From ATG_Doc_Assoc where Link_ID = {0}",V.Local.iID,V.Local.sSql)
+										F.Intrinsic.Control.If(V.DataTable.Doc.Exists)
+											F.Data.DataTable.Close("Doc")
+										F.Intrinsic.Control.EndIf
+										F.Data.DataTable.CreateFromSQL("Doc","con",V.Local.sSql,True)
+										F.Intrinsic.Control.If(V.DataTable.Doc.RowCount--,<>,-1)
+											F.Data.DataTable.SetValue("Doc",-1,"File_Num",V.Ambient.DBNULL,"Link_ID",V.Local.iIdentity)
+											
+											F.Data.DataTable.SaveToDB("Doc","con","ATG_Doc_Assoc","",128,"FILE_NUM@!@FILE_NUM*!*LINK_ID@!@LINK_ID*!*FILE_TYPE@!@FILE_TYPE*!*PATH@!@PATH*!*FILE@!@FILE*!*DESCRIPTION@!@DESCRIPTION*!*DATE_ADDED@!@DATE_ADDED*!*GS_USER@!@GS_USER*!*GRP_ID@!@GRP_ID*!*INFO_1@!@INFO_1*!*INFO_2@!@INFO_2*!*STATUS@!@STATUS*!*REV@!@REV*!*INV_NON_REV@!@INV_NON_REV")
+											F.Data.DataTable.Close("Doc")
+										F.Intrinsic.Control.Else
+											F.Intrinsic.String.LPad(V.Local.iIdentity,"0",9,V.Local.sSql)
+											F.Intrinsic.String.Build("Delete From Link_Data Where Link_ID = '{0}'",V.Local.sSql,V.Local.sSql)
+											F.ODBC.Connection!Con.Execute(V.Local.sSql)
+										F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.Next(V.Local.i)
+								F.Intrinsic.Control.EndIf
+								
+								F.Global.DocumentControl.GetLinkID(V.Local.sLink,2010,V.Local.iID)
+								F.Intrinsic.Control.If(V.Local.iID,<>,-1)
+									F.Intrinsic.Control.For(V.Local.i,0,V.DataTable.PartDim.RowCount--,1)
+										V.Local.sNewLink.Redim(0,4)
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).Part!FieldValTrim," ",22,V.Local.sNewLink(0))
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).Lot!FieldValTrim," ",15,V.Local.sNewLink(1))
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).Bin!FieldValTrim," ",6,V.Local.sNewLink(2))
+										F.Intrinsic.String.RPad(V.DataTable.PartDim(V.Local.i).InventoryNumber!FieldValTrim," ",15,V.Local.sNewLink(3))
+										V.Local.sNewLink(4).Set(V.DataTable.PartDim(V.Local.i).Serial!FieldValTrim)
+										F.Intrinsic.String.Build("{0}{1}{2}{3}{4}",V.Local.sNewLink(0),V.Local.sNewLink(1),V.Local.sNewLink(2),V.Local.sNewLink(3),V.Local.sNewLink(4),V.Local.sNewLink)
+										F.Global.DocumentControl.GetLinkID(V.Local.sNewLink,2010,V.Local.iIdentity)
+										F.Intrinsic.Control.If(V.Local.iIdentity,=,-1)
+											F.Global.DocumentControl.CreateReference(V.Local.sNewLink,2010,V.Local.iIdentity)
+										F.Intrinsic.Control.EndIf
+										
+										F.Intrinsic.String.Build("Select * From ATG_Doc_Assoc where Link_ID = {0}",V.Local.iID,V.Local.sSql)
+										F.Intrinsic.Control.If(V.DataTable.Doc.Exists)
+											F.Data.DataTable.Close("Doc")
+										F.Intrinsic.Control.EndIf
+										F.Data.DataTable.CreateFromSQL("Doc","con",V.Local.sSql,True)
+										F.Intrinsic.Control.If(V.DataTable.Doc.RowCount--,<>,-1)
+											F.Data.DataTable.SetValue("Doc",-1,"File_Num",V.Ambient.DBNULL,"Link_ID",V.Local.iIdentity)
+											
+											F.Data.DataTable.SaveToDB("Doc","con","ATG_Doc_Assoc","",128,"FILE_NUM@!@FILE_NUM*!*LINK_ID@!@LINK_ID*!*FILE_TYPE@!@FILE_TYPE*!*PATH@!@PATH*!*FILE@!@FILE*!*DESCRIPTION@!@DESCRIPTION*!*DATE_ADDED@!@DATE_ADDED*!*GS_USER@!@GS_USER*!*GRP_ID@!@GRP_ID*!*INFO_1@!@INFO_1*!*INFO_2@!@INFO_2*!*STATUS@!@STATUS*!*REV@!@REV*!*INV_NON_REV@!@INV_NON_REV")
+											F.Data.DataTable.Close("Doc")
+										F.Intrinsic.Control.Else
+											F.Intrinsic.String.LPad(V.Local.iIdentity,"0",9,V.Local.sSql)
+											F.Intrinsic.String.Build("Delete From Link_Data Where Link_ID = '{0}'",V.Local.sSql,V.Local.sSql)
+											F.ODBC.Connection!Con.Execute(V.Local.sSql)
+										F.Intrinsic.Control.EndIf
+									F.Intrinsic.Control.Next(V.Local.i)
+								F.Intrinsic.Control.EndIf
+							F.Intrinsic.Control.EndIf
+						F.Intrinsic.Control.EndIf
+					F.Intrinsic.Control.EndIf
+				F.Intrinsic.Control.Next(V.Local.iCount)
+				
+				F.Intrinsic.Control.If(V.DataTable.Part.Exists)
+					F.Data.DataTable.Close("Part")
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataTable.PartDim.Exists)
+					F.Data.DataTable.Close("PartDim")
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataTable.DropPart.Exists)
+					F.Data.DataTable.Close("DropPart")
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataTable.Doc.Exists)
+					F.Data.DataTable.Close("Doc")
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataTable.Desc.Exists)
+					F.Data.DataTable.Close("Desc")
+				F.Intrinsic.Control.EndIf
+				
+				F.Intrinsic.Control.If(V.DataTable.LWW.Exists)
+					F.Data.DataTable.Close("LWW")
+				F.Intrinsic.Control.EndIf
+								
+				F.Intrinsic.File.DeleteFile(V.Local.sDir)
+				
+				F.ODBC.Connection!Con.Close
+			F.Intrinsic.Control.EndIf
+			
+		'post exit hook
+		F.Intrinsic.Control.Case(28852)
+			'deleting file
+			F.Intrinsic.String.Build("{0}\Custom\4729\Drop\{1}{2}Drop.txt",V.Caller.GlobalDir,V.Caller.User,V.Caller.CompanyCode,V.Local.sDir)
+			
+			F.Intrinsic.File.Exists(V.Local.sDir,V.Local.bCheck)
+			F.Intrinsic.Control.If(V.Local.bCheck)
+				F.Intrinsic.File.DeleteFile(V.Local.sDir)
+			F.Intrinsic.Control.EndIf
+				
+	F.Intrinsic.Control.EndSelect
+	
+	F.Intrinsic.Control.CallSub(Exit)
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_4729_Drop_Processing.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.CallSub(Exit)
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.Main.End
+
+Program.Sub.Exit.Start
+F.Intrinsic.Control.Try
+	V.Local.sError.Declare(String,"")
+	
+	F.Intrinsic.Control.End
+	
+	F.Intrinsic.Control.ExitSub
+	
+F.Intrinsic.Control.Catch
+	F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+		F.Intrinsic.String.Build("Project: {0}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}","GCG_4729_Drop_Processing.g2u",V.Ambient.NewLine,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Local.sError)
+		F.Intrinsic.UI.Msgbox(V.Local.sError)
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndTry
+Program.Sub.Exit.End
