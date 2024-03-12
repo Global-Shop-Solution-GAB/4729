@@ -1,0 +1,1748 @@
+Program.Sub.ScreenSU.Start
+Gui.Inv..Create
+Gui.Inv..Caption("Inventory Maintenance")
+Gui.Inv..Size(10905,13095)
+Gui.Inv..MinX(0)
+Gui.Inv..MinY(0)
+Gui.Inv..Position(0,0)
+Gui.Inv..BackColor(-2147483633)
+Gui.Inv..MousePointer(0)
+Gui.Inv..Event(UnLoad,Inv_UnLoad)
+Gui.Inv.lbl1.Create(Label,"Part",True,2010,255,0,165,1170,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtPart.Create(TextBox,"",True,2115,300,0,165,1395,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.lbl2.Create(Label,"Description",True,1935,255,0,2520,1170,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtDescription.Create(TextBox,"",True,3090,300,0,2520,1395,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.lbl3.Create(Label,"Vendor Name",True,1935,255,0,5880,1170,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtName_Vendor.Create(TextBox,"",True,3090,300,0,5880,1395,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.lbl4.Create(Label,"PO #",True,720,255,0,9075,1170,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtPO.Create(TextBox,"",True,765,300,0,9075,1395,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.lbl5.Create(Label,"Lot",True,1155,255,0,180,9705,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtLot.Create(TextBox,"",True,1335,300,0,180,9930,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.txtLot.TabStop(True)
+Gui.Inv.txtLot.TabIndex(29)
+Gui.Inv.lbl6.Create(Label,"Heat",True,1620,255,0,195,1845,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtInventoryNumber.Create(TextBox,"",True,2115,300,0,195,2085,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.txtInventoryNumber.ToolTip("Heat Number from Item Master")
+Gui.Inv.lbl7.Create(Label,"Grade",True,600,255,0,150,3780,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtGrade.Create(TextBox,"",True,1470,300,0,135,3990,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtGrade.TabStop(True)
+Gui.Inv.txtGrade.TabIndex(7)
+Gui.Inv.txtGrade.MaxLength(12)
+Gui.Inv.lbl8.Create(Label,"Thickness",True,975,255,0,360,2895,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtThickness.Create(TextBox,"",True,900,300,0,360,3150,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtThickness.TabStop(True)
+Gui.Inv.txtThickness.TabIndex(3)
+Gui.Inv.txtThickness.Event(Change,Calculate_ActualWeight)
+Gui.Inv.txtThickness.NumericOnly(1)
+Gui.Inv.lbl9.Create(Label,"Width",True,885,255,0,1545,2895,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtWidth.Create(TextBox,"",True,900,300,0,1545,3150,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtWidth.TabStop(True)
+Gui.Inv.txtWidth.TabIndex(4)
+Gui.Inv.txtWidth.Event(Change,Calculate_ActualWeight)
+Gui.Inv.txtWidth.NumericOnly(1)
+Gui.Inv.lbl10.Create(Label,"Length",True,795,255,0,2715,2895,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtLength.Create(TextBox,"",True,900,300,0,2715,3150,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtLength.TabStop(True)
+Gui.Inv.txtLength.TabIndex(5)
+Gui.Inv.txtLength.Event(Change,Calculate_ActualWeight)
+Gui.Inv.txtLength.NumericOnly(1)
+Gui.Inv.lbl11.Create(Label,"Theo. Weight",True,1140,255,0,4920,2910,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtTheoreticalWeight.Create(TextBox,"",True,900,300,0,4965,3165,False,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtTheoreticalWeight.ToolTip("Actual Weight = Thickness x Weight x Length x 0.2836")
+Gui.Inv.txtTheoreticalWeight.Locked(True)
+Gui.Inv.txtTheoreticalWeight.TabStop(True)
+Gui.Inv.txtTheoreticalWeight.TabIndex(6)
+Gui.Inv.lbl12.Create(Label,"Act. Weight",True,975,255,0,3825,2925,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtActualWeight.Create(TextBox,"",True,900,300,0,3825,3150,False,1,"Arial",8,-2147483624,2)
+Gui.Inv.txtActualWeight.Locked(True)
+Gui.Inv.lbl22.Create(Label,"Header",True,2415,255,0,90,225,True,0,"Arial",10,-2147483633,0)
+Gui.Inv.lbl22.FontStyle(False,False,True,False,False)
+Gui.Inv.lbl13.Create(Label,"Cost",True,1935,255,0,120,4530,True,0,"Arial",10,-2147483633,0)
+Gui.Inv.lbl13.FontStyle(False,False,True,False,False)
+Gui.Inv.lbl14.Create(Label,"Cost/LB",True,975,255,0,375,4920,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtCostLB.Create(TextBox,"",True,900,300,0,375,5145,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtCostLB.TabStop(True)
+Gui.Inv.txtCostLB.TabIndex(8)
+Gui.Inv.txtCostLB.Event(Change,Calculate_TotalCost_LB)
+Gui.Inv.txtCostLB.NumericOnly(1)
+Gui.Inv.txtTotalCost.Create(TextBox,"",True,900,300,0,3885,5145,False,1,"Arial",8,-2147483624,2)
+Gui.Inv.txtTotalCost.ToolTip("Total Cost = Total Cost/LB  *  Theoretical Weight")
+Gui.Inv.txtTotalCost.Locked(True)
+Gui.Inv.txtTotalCostLB.Create(TextBox,"",True,900,300,0,2730,5145,False,1,"Arial",8,-2147483624,2)
+Gui.Inv.txtTotalCostLB.ToolTip("Total Cost/LB =  Cost/LB + Freight Cost/LB")
+Gui.Inv.txtTotalCostLB.Event(Change,Calculate_TotalCost)
+Gui.Inv.txtTotalCostLB.Locked(True)
+Gui.Inv.txtFreightLB.Create(TextBox,"0",True,900,300,0,1560,5145,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtFreightLB.TabStop(True)
+Gui.Inv.txtFreightLB.TabIndex(9)
+Gui.Inv.txtFreightLB.Event(Change,Calculate_TotalCost_LB)
+Gui.Inv.txtFreightLB.NumericOnly(1)
+Gui.Inv.lbl15.Create(Label,"Delivery",True,1935,255,0,135,5670,True,0,"Arial",10,-2147483633,0)
+Gui.Inv.lbl15.FontStyle(False,False,True,False,False)
+Gui.Inv.lbl16.Create(Label,"Total Cost",True,1035,255,0,3885,4920,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl17.Create(Label,"Total Cost/LB",True,1050,255,0,2730,4920,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl18.Create(Label,"Frght Cost/LB",True,1155,255,0,1560,4920,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl19.Create(Label,"Mill",True,975,270,0,405,6015,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtMill.Create(TextBox,"",True,2115,300,0,405,6240,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtMill.TabStop(True)
+Gui.Inv.txtMill.TabIndex(10)
+Gui.Inv.txtMill.MaxLength(20)
+Gui.Inv.txtWhseLoc.Create(TextBox,"",False,1140,300,0,8100,6240,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtWhseLoc.TabStop(True)
+Gui.Inv.txtWhseLoc.TabIndex(14)
+Gui.Inv.txtWhseLoc.MaxLength(10)
+Gui.Inv.txtLocationNo.Create(TextBox,"",True,1140,300,0,6630,6240,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtLocationNo.TabStop(True)
+Gui.Inv.txtLocationNo.TabIndex(13)
+Gui.Inv.txtLocationNo.MaxLength(10)
+Gui.Inv.txtBargeNo.Create(TextBox,"",True,1140,300,0,5145,6240,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtBargeNo.TabStop(True)
+Gui.Inv.txtBargeNo.TabIndex(12)
+Gui.Inv.txtBargeNo.MaxLength(10)
+Gui.Inv.txtCarTruck.Create(TextBox,"",True,2115,300,0,2760,6240,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtCarTruck.TabStop(True)
+Gui.Inv.txtCarTruck.TabIndex(11)
+Gui.Inv.txtCarTruck.MaxLength(20)
+Gui.Inv.lbl20.Create(Label,"Whse Loc",False,1035,255,0,8115,6015,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl21.Create(Label,"Location No.",True,1110,255,0,6630,6015,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl23.Create(Label,"Barge No.",True,930,255,0,5145,6015,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl24.Create(Label,"Car/Truck",True,885,255,0,2760,6015,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl45.Create(Label,"Chemical Makeup",True,2910,255,0,150,6900,True,0,"Arial",10,-2147483633,0)
+Gui.Inv.lbl45.FontStyle(False,False,True,False,False)
+Gui.Inv.txtS.Create(TextBox,"",True,900,300,0,5160,7455,True,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtS.TabStop(True)
+Gui.Inv.txtS.TabIndex(18)
+Gui.Inv.txtS.NumericOnly(1)
+Gui.Inv.lbl25.Create(Label,"S",True,720,255,0,5160,7215,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtP.Create(TextBox,"",True,900,300,0,3930,7455,True,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtP.TabStop(True)
+Gui.Inv.txtP.TabIndex(17)
+Gui.Inv.txtP.NumericOnly(1)
+Gui.Inv.lbl26.Create(Label,"P",True,510,255,0,3930,7215,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtMn.Create(TextBox,"",True,900,300,0,2775,7455,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtMn.TabStop(True)
+Gui.Inv.txtMn.TabIndex(16)
+Gui.Inv.txtMn.Event(Change,Calculate_CE)
+Gui.Inv.txtMn.NumericOnly(1)
+Gui.Inv.lbl27.Create(Label,"MN",True,795,255,0,2775,7215,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtC.Create(TextBox,"",True,900,300,0,1605,7455,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtC.TabStop(True)
+Gui.Inv.txtC.TabIndex(15)
+Gui.Inv.txtC.Event(Change,Calculate_CE)
+Gui.Inv.txtC.NumericOnly(1)
+Gui.Inv.lbl28.Create(Label,"C",True,570,255,0,1605,7215,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtCE.Create(TextBox,"",True,900,300,0,420,7455,False,1,"Arial",8,-2147483624,2)
+Gui.Inv.txtCE.ToolTip("CE =  C + MN/6 + (Cr + Mo + V)/5 + (Ni + Cu)/15")
+Gui.Inv.txtCE.Locked(True)
+Gui.Inv.lbl29.Create(Label,"CE",True,555,270,0,420,7215,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtMO.Create(TextBox,"",True,900,300,0,5160,8235,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtMO.TabStop(True)
+Gui.Inv.txtMO.TabIndex(23)
+Gui.Inv.txtMO.Event(Change,Calculate_CE)
+Gui.Inv.txtMO.NumericOnly(1)
+Gui.Inv.lbl30.Create(Label,"MO",True,780,255,0,5160,7995,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtCR.Create(TextBox,"",True,900,300,0,3930,8235,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtCR.TabStop(True)
+Gui.Inv.txtCR.TabIndex(22)
+Gui.Inv.txtCR.Event(Change,Calculate_CE)
+Gui.Inv.txtCR.NumericOnly(1)
+Gui.Inv.lbl31.Create(Label,"CR",True,675,255,0,3930,7995,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtNI.Create(TextBox,"",True,900,300,0,2775,8235,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtNI.TabStop(True)
+Gui.Inv.txtNI.TabIndex(21)
+Gui.Inv.txtNI.Event(Change,Calculate_CE)
+Gui.Inv.txtNI.NumericOnly(1)
+Gui.Inv.lbl32.Create(Label,"NI",True,555,255,0,2775,7995,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtCU.Create(TextBox,"",True,900,300,0,1605,8235,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtCU.TabStop(True)
+Gui.Inv.txtCU.TabIndex(20)
+Gui.Inv.txtCU.Event(Change,Calculate_CE)
+Gui.Inv.txtCU.NumericOnly(1)
+Gui.Inv.lbl33.Create(Label,"CU",True,630,255,0,1590,7995,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtSI.Create(TextBox,"",True,900,300,0,420,8235,True,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtSI.TabStop(True)
+Gui.Inv.txtSI.TabIndex(19)
+Gui.Inv.txtSI.NumericOnly(1)
+Gui.Inv.lbl34.Create(Label,"SI",True,630,270,0,420,7995,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtCB.Create(TextBox,"",True,900,300,0,5160,9045,True,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtCB.TabStop(True)
+Gui.Inv.txtCB.TabIndex(28)
+Gui.Inv.txtCB.NumericOnly(1)
+Gui.Inv.lbl35.Create(Label,"CB",True,705,255,0,5160,8790,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtV.Create(TextBox,"",True,900,300,0,3930,9045,True,1,"Arial",8,-2147483645,2)
+Gui.Inv.txtV.TabStop(True)
+Gui.Inv.txtV.TabIndex(27)
+Gui.Inv.txtV.Event(Change,Calculate_CE)
+Gui.Inv.txtV.NumericOnly(1)
+Gui.Inv.lbl36.Create(Label,"V",True,660,255,0,3930,8790,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtTI.Create(TextBox,"",True,900,300,0,2775,9045,True,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtTI.TabStop(True)
+Gui.Inv.txtTI.TabIndex(26)
+Gui.Inv.txtTI.NumericOnly(1)
+Gui.Inv.lbl37.Create(Label,"TI",True,795,255,0,2775,8790,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtAL.Create(TextBox,"",True,900,300,0,1605,9045,True,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtAL.TabStop(True)
+Gui.Inv.txtAL.TabIndex(25)
+Gui.Inv.txtAL.NumericOnly(1)
+Gui.Inv.lbl38.Create(Label,"AL",True,585,255,0,1605,8790,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtSN.Create(TextBox,"",True,900,300,0,420,9045,True,1,"Arial",8,-2147483643,2)
+Gui.Inv.txtSN.TabStop(True)
+Gui.Inv.txtSN.TabIndex(24)
+Gui.Inv.txtSN.NumericOnly(1)
+Gui.Inv.lbl39.Create(Label,"SN",True,555,270,0,420,8790,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl40.Create(Label,"Testing",True,690,255,0,7530,9675,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl41.Create(Label,"Foreign/Domestic",True,1410,255,0,6000,9675,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtSalesMan.Create(TextBox,"",True,2040,300,0,3090,9915,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtSalesMan.TabStop(True)
+Gui.Inv.txtSalesMan.TabIndex(31)
+Gui.Inv.txtSalesMan.MaxLength(30)
+Gui.Inv.lbl42.Create(Label,"Salesman",True,1710,255,0,3090,9675,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtJob.Create(TextBox,"",True,1140,300,0,1725,9915,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtJob.TabStop(True)
+Gui.Inv.txtJob.TabIndex(30)
+Gui.Inv.txtJob.MaxLength(10)
+Gui.Inv.lbl43.Create(Label,"Job #",True,885,255,0,1725,9675,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtSlab.Create(TextBox,"",True,1140,300,0,5910,2085,True,0,"Arial",8,-2147483643,2)
+Gui.Inv.txtSlab.TabStop(True)
+Gui.Inv.txtSlab.TabIndex(1)
+Gui.Inv.txtSlab.MaxLength(10)
+Gui.Inv.txtSlab.Event(KeyPressEnter,cmdINVShowCHMakeup_Click)
+Gui.Inv.lbl44.Create(Label,"Slab",True,975,270,0,5880,1845,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl47.Create(Label,"Notes",True,810,255,0,195,10440,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtNotes.Create(TextBoxR)
+Gui.Inv.txtNotes.Size(9060,1065)
+Gui.Inv.txtNotes.Position(195,10665)
+Gui.Inv.cmdSave.Create(Button)
+Gui.Inv.cmdSave.Size(855,375)
+Gui.Inv.cmdSave.Position(165,11880)
+Gui.Inv.cmdSave.Caption("Save")
+Gui.Inv.cmdSave.TabStop(True)
+Gui.Inv.cmdSave.TabIndex(35)
+Gui.Inv.cmdSave.Event(Click,cmdSave_Click)
+Gui.Inv.cmdSave.BackColor(-2147483619)
+Gui.Inv.txtForeignDomestic.Create(DropDownList)
+Gui.Inv.txtForeignDomestic.Size(1335,330)
+Gui.Inv.txtForeignDomestic.Position(6000,9915)
+Gui.Inv.txtForeignDomestic.TabStop(True)
+Gui.Inv.txtForeignDomestic.TabIndex(33)
+Gui.Inv.txtTesting.Create(DropDownList)
+Gui.Inv.txtTesting.Size(675,330)
+Gui.Inv.txtTesting.Position(7530,9915)
+Gui.Inv.txtTesting.TabStop(True)
+Gui.Inv.txtTesting.TabIndex(34)
+Gui.Inv.txtAutoNum.Create(TextBox,"",False,750,300,0,195,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl48.Create(Label,"AutoNum",False,825,255,0,210,13260,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl49.Create(Label,"Location",False,825,255,0,1110,13260,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtLoc.Create(TextBox,"",False,750,300,0,1095,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.txtPO_Line.Create(TextBox,"",True,495,300,0,10050,1395,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.lbl50.Create(Label,"Line",True,540,255,0,10050,1170,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl51.Create(Label,"Vendor",False,825,255,0,2055,13260,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtVendor.Create(TextBox,"",False,750,300,0,2040,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.txtLastDateTime.Create(TextBox,"",True,2115,300,0,1125,780,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.lbl52.Create(Label,"Last Changed",True,1905,255,0,1125,555,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl53.Create(Label,"Last User",True,825,255,0,150,555,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtLastUser.Create(TextBox,"",True,765,300,0,150,780,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.txtMTRLink.Create(TextBox,"",False,1335,300,0,6825,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl55.Create(Label,"MRT Link ID",False,1380,255,0,6780,13260,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtAllocated.Create(TextBox,"",False,570,300,0,3990,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl57.Create(Label,"Allocated",False,825,255,0,3960,13245,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.lbl58.Create(Label,"Bin",False,630,255,0,4755,13260,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtBin.Create(TextBox,"",False,570,300,0,4785,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.txtSerial.Create(TextBox,"",False,1230,300,0,5490,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl59.Create(Label,"Serial",False,1140,255,0,5505,13245,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.cmdTest_Link.Create(Button)
+Gui.Inv.cmdTest_Link.Size(825,330)
+Gui.Inv.cmdTest_Link.Position(8370,9915)
+Gui.Inv.cmdTest_Link.Caption("Test Doc.")
+Gui.Inv.cmdTest_Link.Event(Click,cmdTest_Link_Click)
+Gui.Inv.cmdTest_Link.FontSize(7)
+Gui.Inv.cmdTest_Link.FontStyle(True,False,False,False,False)
+Gui.Inv.cmdTest_Link.ToolTip("Link to Testing Documents")
+Gui.Inv.cmdBrowseEmp.Create(Button)
+Gui.Inv.cmdBrowseEmp.Size(540,330)
+Gui.Inv.cmdBrowseEmp.Position(5220,9900)
+Gui.Inv.cmdBrowseEmp.Caption("^")
+Gui.Inv.cmdBrowseEmp.TabStop(True)
+Gui.Inv.cmdBrowseEmp.TabIndex(32)
+Gui.Inv.cmdBrowseEmp.Event(Click,cmdBrowseEmp_Click)
+Gui.Inv.cmdMTR_Link.Create(Button)
+Gui.Inv.cmdMTR_Link.Size(1260,330)
+Gui.Inv.cmdMTR_Link.Position(3390,750)
+Gui.Inv.cmdMTR_Link.Caption("MTR Link Doc.")
+Gui.Inv.cmdMTR_Link.Event(Click,cmdMTR_Link_Click)
+Gui.Inv.cmdMTR_Link.FontSize(7)
+Gui.Inv.cmdMTR_Link.BackColor(-2147483626)
+Gui.Inv.cmdMTR_Link.ToolTip("Link to Item Master Documents")
+Gui.Inv.cmdMTR_Link.FontStyle(True,False,False,False,False)
+Gui.Inv.txtReceiver.Create(TextBox,"",False,750,300,0,2970,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl54.Create(Label,"Receiver",False,735,255,0,2985,13245,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtValidate.Create(TextBox,"",False,630,300,0,8235,13485,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl56.Create(Label,"Validate",False,675,255,0,8250,13290,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtSave.Create(TextBox,"",False,630,300,0,120,14130,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl60.Create(Label,"Save",False,675,255,0,135,13935,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtWait.Create(TextBox,"",False,630,300,0,1005,14130,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.lbl61.Create(Label,"Wait",False,630,255,0,1020,13935,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.chkOverWrite.Create(CheckBox)
+Gui.Inv.chkOverWrite.Size(1275,360)
+Gui.Inv.chkOverWrite.Position(8130,6765)
+Gui.Inv.chkOverWrite.Caption("Overwrite")
+Gui.Inv.chkOverWrite.Event(Click,chkOverWrite_Click)
+Gui.Inv.lbl62.Create(Label,"Dimension",True,1935,255,0,105,2580,True,0,"Arial",10,-2147483633,0)
+Gui.Inv.lbl62.FontStyle(False,False,True,False,False)
+Gui.Inv.lbl63.Create(Label,"Serial number (plate number)",True,2340,255,0,2490,1845,True,0,"Arial",8,-2147483633,0)
+Gui.Inv.txtInventoryNumber2.Create(TextBox,"",True,2535,300,0,2505,2085,False,0,"Arial",8,-2147483633,2)
+Gui.Inv.txtInventoryNumber2.ToolTip("Heat Number from Item Master")
+Gui.Inv.cmdINVShowCHMakeup.Create(Button)
+Gui.Inv.cmdINVShowCHMakeup.Size(2055,375)
+Gui.Inv.cmdINVShowCHMakeup.Position(7605,2070)
+Gui.Inv.cmdINVShowCHMakeup.Caption("Show Chemical Makeup")
+Gui.Inv.cmdINVShowCHMakeup.Event(Click,cmdINVShowCHMakeup_Click)
+Gui.Inv.cmdINVShowCHMakeup.TabStop(True)
+Gui.Inv.cmdINVShowCHMakeup.TabIndex(2)
+Gui.Inv.txtoverwrite.Create(TextBox,"",True,1215,300,0,8145,7215,True,0,"Arial",8,-2147483643,1)
+Gui.Inv.cmdBrowINV.Create(Button)
+Gui.Inv.cmdBrowINV.Size(465,300)
+Gui.Inv.cmdBrowINV.Position(7080,2100)
+Gui.Inv.cmdBrowINV.Caption("^")
+Gui.Inv.cmdBrowINV.Event(Click,cmdBrowINV_Click)
+Gui.frmMaint..Create
+Gui.frmMaint..Caption("Chemical Makeups Maint")
+Gui.frmMaint..Size(9735,4860)
+Gui.frmMaint..MinX(0)
+Gui.frmMaint..MinY(0)
+Gui.frmMaint..Position(0,0)
+Gui.frmMaint..BackColor(-2147483633)
+Gui.frmMaint..MaxButton(False)
+Gui.frmMaint..MousePointer(0)
+Gui.frmMaint..Event(UnLoad,frmMaint_UnLoad)
+Gui.frmMaint.lbl1.Create(Label,"CE",True,1095,255,0,525,1215,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl2.Create(Label,"SI",True,1095,255,0,525,1995,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl3.Create(Label,"SN",True,1095,255,0,525,2805,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl4.Create(Label,"C",True,1095,255,0,2205,1215,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl5.Create(Label,"CU",True,1095,255,0,2205,1995,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl6.Create(Label,"AL",True,1095,255,0,2205,2805,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl7.Create(Label,"MN",True,1095,255,0,3945,1215,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl8.Create(Label,"NI",True,1095,255,0,3945,1995,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl9.Create(Label,"TI",True,1095,255,0,3945,2805,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl10.Create(Label,"P",True,1095,255,0,5640,1215,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl11.Create(Label,"CR",True,1095,255,0,5640,1995,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl12.Create(Label,"V",True,1095,255,0,5640,2805,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl13.Create(Label,"S",True,1095,255,0,7395,1215,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl14.Create(Label,"MO",True,1095,255,0,7395,1995,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl15.Create(Label,"CB",True,1095,255,0,7395,2805,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.txtCE.Create(TextBox,"0",True,1215,300,0,525,1470,False,0,"Arial",8,-2147483624,1)
+Gui.frmMaint.txtCE.TabStop(True)
+Gui.frmMaint.txtCE.TabIndex(4)
+Gui.frmMaint.txtCE.Locked(True)
+Gui.frmMaint.txtCE.ControlGroup(1)
+Gui.frmMaint.txtSI.Create(TextBox,"0",True,1215,300,0,525,2235,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtSI.TabStop(True)
+Gui.frmMaint.txtSI.TabIndex(9)
+Gui.frmMaint.txtSI.NumericOnly(1)
+Gui.frmMaint.txtSI.ControlGroup(1)
+Gui.frmMaint.txtSN.Create(TextBox,"0",True,1215,300,0,525,3045,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtSN.TabStop(True)
+Gui.frmMaint.txtSN.TabIndex(14)
+Gui.frmMaint.txtSN.NumericOnly(1)
+Gui.frmMaint.txtSN.ControlGroup(1)
+Gui.frmMaint.txtC.Create(TextBox,"0",True,1215,300,0,2205,1470,True,0,"Arial",8,-2147483645,1)
+Gui.frmMaint.txtC.TabStop(True)
+Gui.frmMaint.txtC.TabIndex(5)
+Gui.frmMaint.txtC.NumericOnly(1)
+Gui.frmMaint.txtC.ControlGroup(1)
+Gui.frmMaint.txtC.Event(Change,Calculate_CE_Maint)
+Gui.frmMaint.txtCU.Create(TextBox,"0",True,1215,300,0,2205,2235,True,0,"Arial",8,-2147483645,1)
+Gui.frmMaint.txtCU.TabStop(True)
+Gui.frmMaint.txtCU.TabIndex(10)
+Gui.frmMaint.txtCU.NumericOnly(1)
+Gui.frmMaint.txtCU.ControlGroup(1)
+Gui.frmMaint.txtCU.Event(Change,Calculate_CE_Maint)
+Gui.frmMaint.txtAL.Create(TextBox,"0",True,1215,300,0,2205,3045,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtAL.TabStop(True)
+Gui.frmMaint.txtAL.TabIndex(15)
+Gui.frmMaint.txtAL.NumericOnly(1)
+Gui.frmMaint.txtAL.ControlGroup(1)
+Gui.frmMaint.txtMN.Create(TextBox,"0",True,1215,300,0,3945,1470,True,0,"Arial",8,-2147483645,1)
+Gui.frmMaint.txtMN.TabStop(True)
+Gui.frmMaint.txtMN.TabIndex(6)
+Gui.frmMaint.txtMN.NumericOnly(1)
+Gui.frmMaint.txtMN.ControlGroup(1)
+Gui.frmMaint.txtMN.Event(Change,Calculate_CE_Maint)
+Gui.frmMaint.txtNI.Create(TextBox,"0",True,1215,300,0,3945,2235,True,0,"Arial",8,-2147483645,1)
+Gui.frmMaint.txtNI.TabStop(True)
+Gui.frmMaint.txtNI.TabIndex(11)
+Gui.frmMaint.txtNI.NumericOnly(1)
+Gui.frmMaint.txtNI.ControlGroup(1)
+Gui.frmMaint.txtNI.Event(Change,Calculate_CE_Maint)
+Gui.frmMaint.txtTI.Create(TextBox,"0",True,1215,300,0,3945,3045,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtTI.TabStop(True)
+Gui.frmMaint.txtTI.TabIndex(16)
+Gui.frmMaint.txtTI.NumericOnly(1)
+Gui.frmMaint.txtTI.ControlGroup(1)
+Gui.frmMaint.txtP.Create(TextBox,"0",True,1215,300,0,5640,1470,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtP.TabStop(True)
+Gui.frmMaint.txtP.TabIndex(7)
+Gui.frmMaint.txtP.NumericOnly(1)
+Gui.frmMaint.txtP.ControlGroup(1)
+Gui.frmMaint.txtCR.Create(TextBox,"0",True,1215,300,0,5640,2235,True,0,"Arial",8,-2147483645,1)
+Gui.frmMaint.txtCR.TabStop(True)
+Gui.frmMaint.txtCR.TabIndex(12)
+Gui.frmMaint.txtCR.NumericOnly(1)
+Gui.frmMaint.txtCR.ControlGroup(1)
+Gui.frmMaint.txtCR.Event(Change,Calculate_CE_Maint)
+Gui.frmMaint.txtV.Create(TextBox,"0",True,1215,300,0,5640,3045,True,0,"Arial",8,-2147483645,1)
+Gui.frmMaint.txtV.TabStop(True)
+Gui.frmMaint.txtV.TabIndex(17)
+Gui.frmMaint.txtV.NumericOnly(1)
+Gui.frmMaint.txtV.ControlGroup(1)
+Gui.frmMaint.txtV.Event(Change,Calculate_CE_Maint)
+Gui.frmMaint.txtS.Create(TextBox,"0",True,1215,300,0,7395,1470,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtS.TabStop(True)
+Gui.frmMaint.txtS.TabIndex(8)
+Gui.frmMaint.txtS.NumericOnly(1)
+Gui.frmMaint.txtS.ControlGroup(1)
+Gui.frmMaint.txtMO.Create(TextBox,"0",True,1215,300,0,7395,2235,True,0,"Arial",8,-2147483645,1)
+Gui.frmMaint.txtMO.TabStop(True)
+Gui.frmMaint.txtMO.TabIndex(13)
+Gui.frmMaint.txtMO.NumericOnly(1)
+Gui.frmMaint.txtMO.ControlGroup(1)
+Gui.frmMaint.txtMO.Event(Change,Calculate_CE_Maint)
+Gui.frmMaint.txtCB.Create(TextBox,"0",True,1215,300,0,7395,3045,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtCB.TabStop(True)
+Gui.frmMaint.txtCB.TabIndex(18)
+Gui.frmMaint.txtCB.NumericOnly(1)
+Gui.frmMaint.txtCB.ControlGroup(1)
+Gui.frmMaint.frame1.Create(Frame)
+Gui.frmMaint.frame1.Size(8040,765)
+Gui.frmMaint.frame1.Position(525,105)
+Gui.frmMaint.lbl16.Create(Label,"Heat :",True,855,330,0,300,345,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl16.Parent("frame1")
+Gui.frmMaint.txtHeat.Create(TextBox,"",True,1665,300,0,1245,300,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtHeat.Parent("frame1")
+Gui.frmMaint.txtHeat.MaxLength(15)
+Gui.frmMaint.txtHeat.TabStop(True)
+Gui.frmMaint.txtHeat.TabIndex(1)
+Gui.frmMaint.lbl17.Create(Label,"Slab Number :",True,945,465,0,3675,270,True,0,"Arial",8,-2147483633,0)
+Gui.frmMaint.lbl17.Parent("frame1")
+Gui.frmMaint.txtslab.Create(TextBox,"",True,1665,300,0,4725,300,True,0,"Arial",8,-2147483643,1)
+Gui.frmMaint.txtslab.Parent("frame1")
+Gui.frmMaint.txtslab.MaxLength(10)
+Gui.frmMaint.txtslab.TabStop(True)
+Gui.frmMaint.txtslab.TabIndex(2)
+Gui.frmMaint.txtslab.Event(KeyPressEnter,cmdCHShow_Click)
+Gui.frmMaint.cmdCHShow.Create(Button)
+Gui.frmMaint.cmdCHShow.Size(1035,375)
+Gui.frmMaint.cmdCHShow.Position(6855,300)
+Gui.frmMaint.cmdCHShow.Parent("frame1")
+Gui.frmMaint.cmdCHShow.Caption("Display")
+Gui.frmMaint.cmdCHShow.TabStop(True)
+Gui.frmMaint.cmdCHShow.TabIndex(3)
+Gui.frmMaint.cmdCHShow.Event(Click,cmdReset)
+Gui.frmMaint.cmdBrow.Create(Button)
+Gui.frmMaint.cmdBrow.Size(450,330)
+Gui.frmMaint.cmdBrow.Position(2940,285)
+Gui.frmMaint.cmdBrow.Parent("frame1")
+Gui.frmMaint.cmdBrow.Caption("^")
+Gui.frmMaint.cmdBrow.Event(Click,cmdBrow_Click)
+Gui.frmMaint.cmdSave.Create(Button)
+Gui.frmMaint.cmdSave.Size(1035,375)
+Gui.frmMaint.cmdSave.Position(555,3690)
+Gui.frmMaint.cmdSave.Caption("Add")
+Gui.frmMaint.cmdSave.TabStop(True)
+Gui.frmMaint.cmdSave.TabIndex(19)
+Gui.frmMaint.cmdSave.Event(Click,cmdSave_Maint)
+Gui.frmMaint.cmdSave.Enabled(False)
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+v.Global..BulkDeclareString(sColumns,sColumnUsedSelect,sIndexAndColumns,sGuiControl,sVendName,sPO,sLine,sReceiver,sItemID,sItemLinkID,sPart,sDesc,sVend,sLocation,sLot,sBin,sHeat,sSerial)
+v.Global..BulkDeclareLong(iAutoNum)
+v.Global.OnLoadSCR.Declare(Boolean)
+v.Global.fInvCost.Declare
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+'BN Oct 30
+'This project will create a screen that capture Dimension info at PO Receipts. Purchasing > Transactions > P.O. Receipts > Lot/Bin Button
+'At Lot/Bin screen, clicking Save will open the custom screen.
+'Relation: PO => Multi Lines(1) => Multi Receipts/per Line(2) => Multi LotBin/per Receipts(3). 
+'User may set the Lot/Bin at level (3) along with the Dimension data for that specific Lot/Bin, but the action to really Validate the Receipt is at Level(1) (OK button from Purchasing > Transactions > P.O. Receipts).
+'So we use 3 flags: 
+	'Wait flag when OK button is clicked from screen: Purchasing > Transactions > P.O. Receipts > Lot/Bin button
+	'Save flag when Save button is clicked from screen: Purchasing > Transactions > P.O. Receipts
+	'Validate flag when OK button is clicked from screen: Purchasing > Transactions > P.O. Receipts
+
+'Using those 3 flags will reflect the actions in order, of which the Validate flag is the final flag when Receipt data is saved by core, and at that time we have corresponding of custom data is validate and saved to custom data table GCG_4729_Part_Dim.
+
+'The Validate records will be pulled to a Dashboard by script GCG_4729_Dashboard
+
+F.Intrinsic.Control.Try
+V.Local.sExportFile.Declare(String)
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sReceiver.Declare(String)
+V.Local.sHold.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sDate.Declare(String)
+V.Local.sExportData.Declare(String)
+F.ODBC.Connection!con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+
+f.Intrinsic.Control.CallSub(check_custom_table)
+
+'uppercase
+gui.Inv.txtSlab.Mask(">")
+
+'Set the Log Filepath
+F.Intrinsic.String.Build("{0}\4729_Logs",V.Caller.FilesDir,V.Local.sExportFile)
+'Check if directory exists
+F.Intrinsic.File.DirExists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists,<>,True)
+	F.Intrinsic.File.CreateDir(V.Local.sExportFile)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\{1}",V.Local.sExportFile,V.Caller.User,V.Local.sExportFile)
+F.Intrinsic.File.DirExists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists,<>,True)
+	F.Intrinsic.File.CreateDir(V.Local.sExportFile)
+F.Intrinsic.Control.EndIf		
+
+F.Intrinsic.String.Format(V.Ambient.Date,"MMDDYYYY",V.Local.sDate)
+
+F.Intrinsic.Control.SelectCase(v.Caller.Hook)
+
+	'Lot/Bin button from Purchasing > Transactions > P.O. Receipts
+	F.Intrinsic.Control.Case(15071)		
+		'Grab the Receiver+Suffix number_PO+POLine from the PO Receipts and put v.passed.Global, because v.passed for these does not exists in the Lot/Bin Screen
+		'v.Passed.000010: Receiver
+		'v.Passed.000153: Receiver Suffix
+		'Variable.Passed.000002: PO num
+		'Variable.Passed.000070: Line	
+		'Variable.Passed.000143 Invcost
+		f.Intrinsic.String.LPad(Variable.Passed.000002,"0",7,v.Global.sPO)
+		f.Intrinsic.String.LPad(Variable.Passed.000070,"0",3,v.Global.sLine)		
+'		f.Intrinsic.String.Build("{0}{1}_{2}{3}",v.Passed.000010,v.Passed.000153,v.Global.sPO,v.Global.sLine,v.Local.sHold)
+		f.Intrinsic.String.Build("{0}{1}_{2}{3}_{4}",v.Passed.000010,v.Passed.000153,v.Global.sPO,v.Global.sLine,Variable.Passed.000143,v.Local.sHold)
+		v.Passed.Global.Set(v.Local.sHold)
+
+	'Save button in Lot/Bin screen	
+	F.Intrinsic.Control.Case(16420)	
+		f.Intrinsic.UI.InvokeWaitDialog("Pulling data...")
+		f.Intrinsic.Control.BlockEvents			
+		'Get all column names of GCG_4729_Part_Dim
+
+		f.ODBC.Connection!con.ExecuteAndReturn("Select ltrim(rtrim(XE$Name)) as Columns from X$File F1 Inner Join X$Field F2 On F2.XE$File = F1.XF$ID where F1.Xf$Name = 'GCG_4729_Part_Dim' and COLUMNS <> 'UK_AutoNum' and COLUMNS not like 'GCG_4729%'",V.Global.sColumns)
+		'Delete the Indexe names in the string
+'		f.Intrinsic.String.Replace(v.Global.sColumns,"#$#GCG_4729_01#$#GCG_4729_02#$#GCG_4729_03#$#GCG_4729_04#$#GCG_4729_05#$#GCG_4729_06#$#GCG_4729_07#$#GCG_4729_08#$#GCG_4729_09","",v.Global.sColumns)
+		f.Intrinsic.String.Replace(v.Global.sColumns,"#$#",",",v.Global.sColumnUsedSelect)
+		f.Intrinsic.String.Replace(v.Global.sColumns,"#$#",",txt",v.Global.sGuiControl)
+		f.Intrinsic.String.Split(v.Global.sGuiControl,",",v.Global.sGuiControl)
+		f.Intrinsic.String.Build("txt{0}",v.Global.sGuiControl(0),v.Global.sGuiControl(0))
+		f.Intrinsic.String.Split(v.Global.sColumns,"#$#",v.Global.sColumns)		
+		f.Intrinsic.Control.CallSub(get_set_info_from_hook)
+		f.Intrinsic.Control.CallSub(Populate)	
+		gui.Inv.cmdMTR_Link.BackColor(v.Color.PRI-GSS-01)
+		gui.Inv.cmdTest_Link.BackColor(v.Color.PRI-GSS-01)		
+		f.Intrinsic.UI.CloseWaitDialog
+		gui.Inv..Show
+		f.Intrinsic.Control.UnBlockEvents
+
+	'Populate hook of Lot/Bin screen	
+	F.Intrinsic.Control.Case(16400)	
+		f.Intrinsic.Control.CallSub(flag_Wait_lotbin_screen)
+
+	'OK button from Lot/Bin screen	
+	F.Intrinsic.Control.Case(16426)		
+		f.Intrinsic.Control.CallSub(flag_Wait_lotbin_screen)
+
+	'Pre Save hook from  Purchasing > Transactions > P.O. Receipts.
+	F.Intrinsic.Control.Case(15030)		
+
+		'Variable.Passed.000002: PO Num (trimmed)
+		'Variable.Passed.000070: Line (trimmed)
+		'Variable.Passed.000010: Receiver Num (ex: 00083)
+		'Variable.Passed.000153: Receiver Suffix (ex: A)		
+		'Variable.Passed.000071: Part
+		'Variable.Passed.000025: Rev					
+		f.Intrinsic.String.LPad(Variable.Passed.000002,"0",7,v.Global.sPO)
+		f.Intrinsic.String.LPad(Variable.Passed.000070,"0",3,v.Global.sLine)
+		f.Intrinsic.String.Build("{0}{1}",v.Passed.000010,v.Passed.000153,v.Global.sReceiver)
+			f.Intrinsic.String.GSSPartString(Variable.Passed.000071,Variable.Passed.000025,v.Global.sPart)
+		f.Intrinsic.String.Build("Update GCG_4729_Part_Dim set Save = 'Y' where PO = '{0}' and PO_Line = '{1}' and Receiver = '{2}' and Part = '{3}' and Wait = 'Y'",v.Global.sPO,v.Global.sLine,v.Global.sReceiver,v.Global.sPart,v.Local.sSQL)
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)		
+
+	'Post OK hook from  Purchasing > Transactions > P.O. Receipts	
+	F.Intrinsic.Control.Case(15040)		
+		
+		F.Intrinsic.String.Build("{0}\{1}.txt",V.Local.sExportFile,V.Local.sDate,V.Local.sExportFile)
+		F.Intrinsic.String.Build("{0}: Begin Post Ok Hook 15040",V.Ambient.Now,V.Local.sExportData)
+		
+		F.Intrinsic.File.Exists(V.Local.sExportFile,V.Local.bExists)
+		
+		F.Intrinsic.Control.If(V.Local.bExists)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.File.String2File(V.Local.sExportFile,V.Local.sExportData)
+		F.Intrinsic.Control.EndIf
+		
+		'Variable.Passed.000002: PO Num (trimmed)
+		'Variable.Passed.000010: Receiver Num 00083
+		'Variable.Passed.000153: Receiver Suffix
+		f.Intrinsic.String.LPad(Variable.Passed.000002,"0",7,v.Global.sPO)		
+		f.Intrinsic.String.Build("{0}{1}",v.Passed.000010,v.Passed.000153,v.Global.sReceiver)		
+		f.Intrinsic.String.Build("Update GCG_4729_Part_Dim set Validate = 'Y' where PO = '{0}' and Receiver = '{1}' and Save = 'Y' and Wait = 'Y'",v.Global.sPO,v.Global.sReceiver,v.Local.sSQL)	
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+
+	'Exit button from  Purchasing > Transactions > P.O. Receipts	
+	F.Intrinsic.Control.Case(15068)
+		f.Intrinsic.String.Build("Delete from GCG_4729_Part_Dim where Validate = ''",v.Global.sPO,v.Global.sReceiver,v.Local.sSQL)
+		
+		F.Intrinsic.String.Build("{0}\{1}.txt",V.Local.sExportFile,V.Local.sDate,V.Local.sExportFile)
+		F.Intrinsic.String.Build("{0}: Begin Exit Button Hook 15068",V.Ambient.Now,V.Local.sExportData)
+		
+		F.Intrinsic.File.Exists(V.Local.sExportFile,V.Local.bExists)
+		
+		F.Intrinsic.Control.If(V.Local.bExists)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.File.String2File(V.Local.sExportFile,V.Local.sExportData)
+		F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.String.Build("{0}: Executing Query - {1}{2}",V.Ambient.Now,V.Ambient.NewLine,V.Local.sSQL,V.Local.sExportData)
+		F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)
+
+	'Change PO hook from  Purchasing > Transactions > P.O. Receipts
+	F.Intrinsic.Control.Case(15021)		
+		f.Intrinsic.String.Build("Delete from GCG_4729_Part_Dim where Validate = ''",v.Global.sPO,v.Global.sReceiver,v.Local.sSQL)
+		
+		F.Intrinsic.String.Build("{0}\{1}.txt",V.Local.sExportFile,V.Local.sDate,V.Local.sExportFile)
+		F.Intrinsic.String.Build("{0}: Begin Change Hook 15021",V.Ambient.Now,V.Local.sExportData)
+		
+		F.Intrinsic.File.Exists(V.Local.sExportFile,V.Local.bExists)
+		
+		F.Intrinsic.Control.If(V.Local.bExists)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		F.Intrinsic.Control.Else
+			F.Intrinsic.File.String2File(V.Local.sExportFile,V.Local.sExportData)
+		F.Intrinsic.Control.EndIf
+		
+		F.Intrinsic.String.Build("{0}: Executing Query - {1}{2}",V.Ambient.Now,V.Ambient.NewLine,V.Local.sSQL,V.Local.sExportData)
+		F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		
+		f.ODBC.Connection!con.Execute(v.Local.sSQL)	
+	F.Intrinsic.Control.CaseElse
+		'uppercase
+		gui.frmMaint.txtHeat.Mask(">")
+		gui.frmMaint.txtslab.Mask(">")
+		gui.frmMaint..Show 
+		gui.frmMaint.txtHeat.SetFocus	
+F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.Main.End
+
+Program.Sub.Flag_Wait_LotBin_Screen.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sReceiverPOPOLine,sReadRow)
+v.Local..BulkDeclareLong(iRowCnt,i)
+V.Local.sExportFile.Declare(String)
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sReceiver.Declare(String)
+V.Local.sHold.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sDate.Declare(String)
+V.Local.sExportData.Declare(String)
+
+'Variable.Passed.000001: Part num
+'Variable.Passed.000135: Rev
+'Variable.Passed.000002: Location
+'v.passed.Global: Receiver_POPOLine
+f.Intrinsic.String.Split(v.Passed.Global,"_",v.Local.sReceiverPOPOLine)
+v.Global.sReceiver.Set(v.Local.sReceiverPOPOLine(0))
+v.Local.sHold.Set(v.Local.sReceiverPOPOLine(1))
+f.Intrinsic.String.Left(v.Local.sHold,7,v.Global.sPO)
+f.Intrinsic.String.Right(v.Local.sHold,3,v.Global.sLine)
+f.Intrinsic.String.GSSPartString(Variable.Passed.000001,Variable.Passed.000135,v.Global.sPart)
+f.Intrinsic.String.RPad(Variable.Passed.000002," ",2,v.Global.sLocation)
+
+'Set the Log Filepath
+F.Intrinsic.String.Build("{0}\4729_Logs",V.Caller.FilesDir,V.Local.sExportFile)
+'Check if directory exists
+F.Intrinsic.File.DirExists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists,<>,True)
+	F.Intrinsic.File.CreateDir(V.Local.sExportFile)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\{1}",V.Local.sExportFile,V.Caller.User,V.Local.sExportFile)
+F.Intrinsic.File.DirExists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists,<>,True)
+	F.Intrinsic.File.CreateDir(V.Local.sExportFile)
+F.Intrinsic.Control.EndIf		
+
+F.Intrinsic.String.Format(V.Ambient.Date,"MMDDYYYY",V.Local.sDate)
+
+F.Intrinsic.String.Build("{0}\{1}.txt",V.Local.sExportFile,V.Local.sDate,V.Local.sExportFile)
+F.Intrinsic.String.Build("{0}: Begin Flag_Wait_LotBin Subroutine",V.Ambient.Now,V.Local.sExportData)
+
+F.Intrinsic.File.Exists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+F.Intrinsic.Control.Else
+	F.Intrinsic.File.String2File(V.Local.sExportFile,V.Local.sExportData)
+F.Intrinsic.Control.EndIf
+
+'Flag all Wait with ''		
+f.Intrinsic.String.Build("Update GCG_4729_Part_Dim set Wait = '' where PO = '{0}' and PO_Line = '{1}' and Receiver = '{2}' and Part = '{3}' and Loc = '{4}'",v.Global.sPO,v.Global.sLine,v.Global.sReceiver,v.Global.sPart,v.Global.sLocation,v.Local.sSQL)
+f.ODBC.Connection!con.Execute(v.Local.sSQL)	
+
+'Load the BDF from the Purchasing > Transactions > P.O. Receipts > Lot/Bin Button
+F.Intrinsic.BDF.Load("AUX002","AUX002")
+F.Intrinsic.BDF.ReadRowCount("AUX002",v.Local.iRowCnt)		
+'Loop the BDF, for each Lot/Bin, set Wait to 'Y'
+f.Intrinsic.Math.Sub(V.Local.iRowCnt,1,v.Local.iRowCnt)
+f.Intrinsic.Control.For(v.Local.i,0,V.Local.iRowCnt,1)
+	'Read data from AUX001
+	f.Intrinsic.BDF.ReadRow("AUX002",v.Local.i,v.Local.sReadRow)
+	f.Intrinsic.String.Split(v.Local.sReadRow,"|~|",v.Local.sReadRow)
+	f.Intrinsic.String.Build("Update GCG_4729_Part_Dim set Wait = 'Y' where PO = '{0}' and PO_Line = '{1}' and Receiver = '{2}' and Part = '{3}' and Loc = '{4}' and Lot = '{5}' and InventoryNumber = '{6}' and Bin = '{7}' and Serial = '{8}'",v.Global.sPO,v.Global.sLine,v.Global.sReceiver,v.Global.sPart,v.Global.sLocation,v.Local.sReadRow(3),v.Local.sReadRow(4),v.Local.sReadRow(2),v.Local.sReadRow(5),v.Local.sSQL)
+
+	F.Intrinsic.String.Build("{0}: Executing Query - {1}{2}",V.Ambient.Now,V.Ambient.NewLine,V.Local.sSQL,V.Local.sExportData)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+
+	f.ODBC.Connection!con.Execute(v.Local.sSQL)
+f.Intrinsic.Control.Next(v.Local.i)
+'Delete the rest in custom table GCG_4729_Part_Dim which are not in the BDF
+f.Intrinsic.String.Build("Delete from GCG_4729_Part_Dim where PO = '{0}' and PO_Line = '{1}' and Receiver = '{2}' and Part = '{3}' and Loc = '{4}' and Wait = ''",v.Global.sPO,v.Global.sLine,v.Global.sReceiver,v.Global.sPart,v.Global.sLocation,v.Local.sSQL)
+f.ODBC.Connection!con.Execute(v.Local.sSQL)
+
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.Flag_Wait_LotBin_Screen.End
+
+Program.Sub.Inv_UnLoad.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local.iFlag.Declare(long)
+
+F.Intrinsic.UI.Msgbox("You are about to exit this screen and all information will be lost. Continue?","Exit",4,V.Local.iFlag)
+F.Intrinsic.Control.If(V.Local.iFlag,=,6)
+	f.Intrinsic.Control.CallSub(flag_wait_lotbin_screen)
+	f.ODBC.Connection!con.Close	
+	F.Intrinsic.Control.End 	
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Inv_UnLoad.End
+
+Program.Sub.Get_Set_Info_From_Hook.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError,sSQL,sHold)
+v.Local.iItemLinkID.Declare(long)
+
+v.Global.sPO.Set(V.Passed.009000)
+v.Global.sLine.Set(V.Passed.009001)
+f.Intrinsic.String.Split(v.Passed.Global,"_",v.Local.sHold)
+v.Global.sReceiver.Set(v.Local.sHold(0))
+v.Global.fInvCost.Set(v.Local.sHold(2))
+
+f.Intrinsic.String.GSSPartString(Variable.Passed.000001,Variable.Passed.000135,v.Global.sPart)
+f.Intrinsic.String.RPad(Variable.Passed.000002," ",2,v.Global.sLocation)
+f.Intrinsic.String.RPad(Variable.Passed.000003," ",30,v.Global.sDesc)
+f.Intrinsic.String.RPad(Variable.Passed.000061," ",15,v.Global.sLot)
+f.Intrinsic.String.RPad(Variable.Passed.000062," ",6,v.Global.sBin)
+f.Intrinsic.String.RPad(Variable.Passed.000064," ",15,v.Global.sHeat)
+f.Intrinsic.String.RPad(Variable.Passed.000065," ",30,v.Global.sSerial)
+
+f.Intrinsic.String.Build("Select Vendor from V_PO_Header where Purchase_Order = '{0}'",v.Global.sPO,v.Local.sSQL)
+f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL,v.Global.sVend)
+f.Intrinsic.String.Build("Select Name_Vendor from V_Vendor_Master where Vendor = '{0}'",v.Global.sVend,v.Local.sSQL)
+f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL,v.Global.sVendName)
+
+f.Intrinsic.String.Build("{0}{1}{2}{3}{4}{5}",v.Global.sPart,V.Global.sLocation,v.Global.sLot,v.Global.sBin,v.Global.sHeat,v.Global.sSerial,v.Global.sItemID)
+'Activate the Item Master link so that user can initialize the Link from the custom screen instead of from the BDF in the core screen
+F.Global.DocumentControl.GetLinkID(v.Global.sItemID,31,v.Local.iItemLinkID)
+f.Intrinsic.Control.If(v.Local.iItemLinkID,=,-1)
+	F.Global.DocumentControl.CreateReference(v.Global.sItemID,31,v.Local.iItemLinkID)
+f.Intrinsic.Control.EndIf
+
+'Activate Testing Document Link
+F.Global.DocumentControl.GetLinkID(v.Global.sItemID,2010,v.Local.iItemLinkID)
+f.Intrinsic.Control.If(v.Local.iItemLinkID,=,-1)
+	F.Global.DocumentControl.CreateReference(v.Global.sItemID,2010,v.Local.iItemLinkID)
+f.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.Get_Set_Info_From_Hook.End
+
+Program.Sub.Populate.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError,sSQL,sRet,sValue,sControl,sFile)
+v.Local..BulkDeclareLong(iCnt)
+V.Local.bRet.Declare(Boolean,False)
+
+
+'Add items for 2 dropdownLists
+gui.Inv.txtForeignDomestic.AddItem("Domestic")
+gui.Inv.txtForeignDomestic.AddItem("Foreign")
+gui.Inv.txtTesting.AddItem("No")
+gui.Inv.txtTesting.AddItem("Yes")
+
+'Function.Intrinsic.Debug.InvokeDebugger
+'Function.Intrinsic.Debug.Stop
+
+
+'Check if Data for this PO,PO_Line,Part,Loc,Lot exists?
+f.Intrinsic.String.Build("Select {0} from GCG_4729_Part_Dim where PO = '{1}' and PO_Line = '{2}' and Receiver = '{3}' and Part = '{4}' and Loc = '{5}' and Lot = '{6}' and InventoryNumber = '{7}' and Bin = '{8}' and Serial = '{9}'",v.Global.sColumnUsedSelect,v.Global.sPO,v.Global.sLine,v.Global.sReceiver,v.Global.sPart,v.Global.sLocation,v.Global.sLot,v.Global.sHeat,v.Global.sBin,v.Global.sSerial,v.Local.sSQL)
+f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL,v.Local.sRet)
+f.Intrinsic.Control.If(v.Local.sRet,<>,"")
+	'Data exists in custom table for this specific PO_Line>Receiver>Part>Lot/Bin
+	f.Intrinsic.String.Split(v.Local.sRet,"*!*",v.Local.sRet)
+	f.Intrinsic.Control.For(v.Local.iCnt,14,v.Local.sRet.UBound,1)
+		v.Local.sValue.Set(v.Local.sRet(v.Local.iCnt))
+		v.Local.sControl.Set(v.Global.sGuiControl(v.Local.iCnt))
+		gui.Inv.[v.Local.sControl].Text(v.Local.sValue)		
+	f.Intrinsic.Control.Next(v.Local.iCnt)
+	v.Global.iAutoNum.Set(v.Local.sRet(0))
+f.Intrinsic.Control.Else
+	'Data does not exists for this specific PO_Line>Receiver>Part>Lot/Bin. Get the data from other Lot/Bin of the same PO_Line>Receiver>Part
+'	f.Intrinsic.String.Build("Select Top 1 {0} from GCG_4729_Part_Dim where PO = '{1}' and PO_Line = '{2}' and Receiver = '{3}' and Part = '{4}' and Loc = '{5}'",v.Global.sColumnUsedSelect,v.Global.sPO,v.Global.sLine,v.Global.sReceiver,v.Global.sPart,v.Global.sLocation,v.Local.sSQL)
+'	f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL,v.Local.sRet)
+'	f.Intrinsic.Control.If(v.Local.sRet,<>,"")
+'		f.Intrinsic.String.Split(v.Local.sRet,"*!*",v.Local.sRet)
+'		f.Intrinsic.Control.For(v.Local.iCnt,14,v.Local.sRet.UBound,1)
+'			v.Local.sValue.Set(v.Local.sRet(v.Local.iCnt))
+'			v.Local.sControl.Set(v.Global.sGuiControl(v.Local.iCnt))
+'			gui.Inv.[v.Local.sControl].Text(v.Local.sValue)		
+'		f.Intrinsic.Control.Next(v.Local.iCnt)	
+'	f.Intrinsic.Control.Else
+		f.Intrinsic.String.Build("Select top 1 C,MN,P,S,SI,CU,NI,CR,MO,SN,AL,TI,V,CB,CE from GCG_4729_Part_Dim where InventoryNumber = '{0}' ",v.Global.sHeat,v.Local.sSQL)
+		f.ODBC.Connection!con.ExecuteAndReturn(v.Local.sSQL,v.Local.sRet)
+		f.Intrinsic.Control.If(v.Local.sRet,<>,"")
+			v.Global.OnLoadSCR.Set(True)
+			f.Intrinsic.String.Split(v.Local.sRet,"*!*",v.Local.sRet)
+			gui.Inv.txtC.Text(v.Local.sRet(0)) 
+			gui.Inv.txtMN.Text(v.Local.sRet(1)) 
+			gui.Inv.txtP.Text(v.Local.sRet(2))
+			gui.Inv.txtS.Text(v.Local.sRet(3)) 
+			gui.Inv.txtSI.Text(v.Local.sRet(4)) 
+			gui.Inv.txtCU.Text(v.Local.sRet(5)) 
+			gui.Inv.txtNI.Text(v.Local.sRet(6)) 
+			gui.Inv.txtCR.Text(v.Local.sRet(7)) 
+			gui.Inv.txtMO.Text(v.Local.sRet(8)) 
+			gui.Inv.txtSN.Text(v.Local.sRet(9)) 
+			gui.Inv.txtAL.Text(v.Local.sRet(10)) 
+			gui.Inv.txtTI.Text(v.Local.sRet(11)) 
+			gui.Inv.txtV.Text(v.Local.sRet(12)) 
+			gui.Inv.txtCB.Text(v.Local.sRet(13)) 
+			gui.Inv.txtCE.Text(v.Local.sRet(14))
+			v.Global.OnLoadSCR.Set(False)
+		f.Intrinsic.Control.EndIf
+'	f.Intrinsic.Control.EndIf
+	v.Global.iAutoNum.Set(0)
+f.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.If(v.Screen.Inv!txtoverwrite.text,<>,"")
+	gui.Inv.chkOverWrite.Value(v.Screen.Inv!txtoverwrite.text)
+	f.Intrinsic.Control.If(v.Screen.Inv!chkOverWrite.Value,=,0)
+		f.Intrinsic.Control.CallSub(cmdINVShowCHMakeup_Click)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.EndIf
+
+
+f.Intrinsic.String.Build("select LBS from Inventory_Mst2 where part = '{0}' and location = '{1}'",v.Global.sPart,v.Global.sLocation,v.local.sSql)
+f.Data.DataTable.CreateFromSQL("DTGet","con",v.Local.sSQL,True)
+f.Intrinsic.Control.If(v.DataTable.DTGet.rowcount,>,0)
+	gui.Inv.txtTheoreticalWeight.Text(v.DataTable.DTGet(0).LBS!fieldval)
+f.Intrinsic.Control.EndIf
+f.Data.DataTable.Close("DTGet")
+
+
+f.Intrinsic.String.Build("select Code_Sort from Inventory_Mstr where part = '{0}' and location = '{1}'",v.Global.sPart,v.Global.sLocation,v.local.sSql)
+f.Data.DataTable.CreateFromSQL("DTGet","con",v.Local.sSQL,True)
+f.Intrinsic.Control.If(v.DataTable.DTGet.rowcount,>,0)
+	gui.Inv.txtGrade.Text(v.DataTable.DTGet(0).Code_Sort!fieldvaltrim)
+f.Intrinsic.Control.EndIf
+f.Data.DataTable.Close("DTGet")
+
+
+
+'new formula for COST - 08/09
+f.Intrinsic.Control.If(v.Global.fInvCost,>,0)
+	f.Intrinsic.Control.If(v.Screen.Inv!txtTheoreticalWeight.text,>,0)
+		f.Intrinsic.Math.Div(v.Global.fInvCost,v.Screen.Inv!txtTheoreticalWeight.text,v.Global.fInvCost)
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.EndIf
+
+'Inv Cost
+gui.Inv.txtCostLB.text(v.Global.fInvCost)
+Gui.Inv.txtTotalCostLB.Text(V.Global.fInvCost)
+F.Intrinsic.Control.CallSub(Calculate_TotalCost)
+
+'AutoNum
+gui.Inv.txtAutoNum.Text(v.Global.iAutoNum)
+
+'Function.Intrinsic.Debug.Stop
+
+'PO info
+gui.Inv.txtPO.Text(V.Global.sPO)
+gui.Inv.txtPO_Line.Text(v.Global.sLine)
+gui.Inv.txtReceiver.Text(v.Global.sReceiver)
+gui.Inv.txtVendor.Text(v.Global.sVend)
+gui.Inv.txtName_Vendor.Text(v.Global.sVendName)
+
+'Part info
+gui.Inv.txtPart.Text(v.Global.sPart)
+gui.Inv.txtLoc.Text(v.Global.sLocation)
+gui.Inv.txtDescription.Text(v.Global.sDesc)
+
+'Item info
+gui.Inv.txtLot.Text(v.Global.sLot)
+gui.Inv.txtInventoryNumber.Text(v.Global.sHeat)
+gui.Inv.txtInventoryNumber2.Text(v.Global.sSerial)
+gui.Inv.txtBin.Text(v.Global.sBin)	
+gui.Inv.txtSerial.Text(v.Global.sSerial)
+gui.Inv.txtMTRLink.Text(v.Global.sItemID)
+
+'if Mill and Car/Truck field are blank. preload with initial values that was entered on the first recieved po line.
+'these values will be saved in a text file per the user.
+F.Intrinsic.String.Build("{0}\Custom\4729\",V.Caller.GlobalDir,V.Local.sFile)
+F.Intrinsic.File.DirExists(V.Local.sFile,V.Local.bRet)
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.CreateDir(V.Local.sFile)
+F.Intrinsic.Control.EndIf
+F.Intrinsic.String.Build("{0}\Custom\4729\4729_{1}.txt",V.Caller.GlobalDir,V.Caller.User,V.Local.sFile)
+F.Intrinsic.File.Exists(V.Local.sFile,V.Local.bRet)
+F.Intrinsic.Control.If(V.Local.bRet,=,False)
+	F.Intrinsic.File.String2File(V.Local.sFile,"-1")
+F.Intrinsic.Control.EndIf
+F.Intrinsic.String.Build("{0}\Custom\4729\4729_{1}.txt",V.Caller.GlobalDir,V.Caller.User,V.Local.sFile)
+F.Intrinsic.File.File2String(V.Local.sFile,V.Local.sFile)
+F.Intrinsic.String.Split(V.Local.sFile,"*!*",V.Local.sFile)
+V.Local.sFile.RedimPreserve(0,2)
+
+F.Intrinsic.Control.If(V.Global.sPO,=,V.Local.sFile(0))
+	F.Intrinsic.Control.If(V.Screen.Inv!txtMill.Text,=,"")
+		Gui.Inv.txtMill.Text(V.Local.sFile(1))
+	F.Intrinsic.Control.EndIf
+	F.Intrinsic.Control.If(V.Screen.Inv!txtCarTruck.Text,=,"")
+		Gui.Inv.txtCarTruck.Text(V.Local.sFile(2))
+	F.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.Populate.End
+
+Program.Sub.cmdSave_Click.Start
+F.Intrinsic.Control.Try
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sRet.Declare(String)
+V.Local.sColumnsUsedInsert.Declare(String)
+V.Local.sValuesInsert.Declare(String)
+V.Local.sUpDateSet.Declare(String)
+V.Local.sFile.Declare(String)
+V.Local.sData.Declare(String)
+V.Local.iCnt.Declare(Long)
+V.Local.bRet.Declare(Boolean,False)
+V.Local.iRet.Declare(Long,0)
+V.Local.iID.Declare(Long,0)
+V.Local.sExportFile.Declare(String)
+V.Local.sExportData.Declare(String)
+V.Local.bExists.Declare(Boolean)
+V.Local.sDate.Declare(String)
+
+'Set the Log Filepath
+F.Intrinsic.String.Build("{0}\4729_Logs",V.Caller.FilesDir,V.Local.sExportFile)
+'Check if directory exists
+F.Intrinsic.File.DirExists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists,<>,True)
+	F.Intrinsic.File.CreateDir(V.Local.sExportFile)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Build("{0}\{1}",V.Local.sExportFile,V.Caller.User,V.Local.sExportFile)
+F.Intrinsic.File.DirExists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists,<>,True)
+	F.Intrinsic.File.CreateDir(V.Local.sExportFile)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.String.Format(V.Ambient.Date,"MMDDYYYY",V.Local.sDate)
+
+F.Intrinsic.String.Build("{0}\{1}.txt",V.Local.sExportFile,V.Local.sDate,V.Local.sExportFile)
+F.Intrinsic.String.Build("{0}: Begin Save Method",V.Ambient.Now,V.Local.sExportData)
+
+F.Intrinsic.File.Exists(V.Local.sExportFile,V.Local.bExists)
+
+F.Intrinsic.Control.If(V.Local.bExists)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+F.Intrinsic.Control.Else
+	F.Intrinsic.File.String2File(V.Local.sExportFile,V.Local.sExportData)
+F.Intrinsic.Control.EndIf
+
+'check if mtr links have been created if not prompt user 
+F.Global.DocumentControl.GetLinkID(v.Screen.Inv!txtMTRLink.Text,31,V.Local.iID)
+
+F.Intrinsic.Control.If(V.Local.iID,=,-1)
+	F.Intrinsic.UI.Msgbox("No MTR Links created.  Do you still want to save?","Attention",4,V.Local.iRet)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.If(V.Local.iRet,=,7)
+	F.Intrinsic.String.Build("{0}: No MTR Links Created. User chose to cancel save.",V.Ambient.Now,V.Local.sExportData)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+	F.Intrinsic.Control.ExitSub
+F.Intrinsic.Control.Else
+	F.Intrinsic.String.Build("{0}: Entering Validation Sub",V.Ambient.Now,V.Local.sExportData)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+	
+	f.Intrinsic.Control.CallSub(validation)
+	
+	F.Intrinsic.String.Build("{0}: Returned From Validation Sub",V.Ambient.Now,V.Local.sExportData)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+	
+	f.Intrinsic.Control.If(v.Screen.Inv!chkOverWrite.Value,=,1)
+		gui.Inv.txtoverwrite.Text(1)
+	f.Intrinsic.Control.Else
+		gui.Inv.txtoverwrite.Text(0)
+	f.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.String.Build("{0}: Checking if PO In File has changed.",V.Ambient.Now,V.Local.sExportData)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+	
+	'checking if PO in File has changed
+	F.Intrinsic.String.Build("{0}\Custom\4729\4729_{1}.txt",V.Caller.GlobalDir,V.Caller.User,V.Local.sFile)
+	F.Intrinsic.File.Exists(V.Local.sFile,V.Local.bRet)
+	F.Intrinsic.Control.If(V.Local.bRet,=,False)
+		F.Intrinsic.File.String2File(V.Local.sFile,"-1")
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.File.File2String(V.Local.sFile,V.Local.sFile)
+	F.Intrinsic.String.Split(V.Local.sFile,"*!*",V.Local.sFile)
+	V.Local.sFile.RedimPreserve(0,2)
+	
+	F.Intrinsic.Control.If(V.Global.sPO,<>,V.Local.sFile(0))
+		F.Intrinsic.String.Build("{0}: PO In File has changed.",V.Ambient.Now,V.Local.sExportData)
+		F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		
+		F.Intrinsic.String.Build("{0}\Custom\4729\4729_{1}.txt",V.Caller.GlobalDir,V.Caller.User,V.Local.sFile)
+		F.Intrinsic.String.Build("{0}*!*{1}*!*{2}",V.Global.sPO,V.Screen.Inv!txtMill.Text,V.Screen.Inv!txtCarTruck.Text,V.Local.sData)
+		F.Intrinsic.File.String2File(V.Local.sFile,V.Local.sData)
+	F.Intrinsic.Control.EndIf
+	
+	F.Intrinsic.String.Build("{0}: Checking if good data.",V.Ambient.Now,V.Local.sExportData)
+	F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+	
+	f.Intrinsic.Control.If(v.Args.GoodData,=,"Yes")
+		F.Intrinsic.String.Build("{0}: Data good.",V.Ambient.Now,V.Local.sExportData)
+		F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		
+		f.Intrinsic.Control.CallSub(datetime)
+		gui.Inv.txtLastDateTime.Text(v.Args.DateAndTime)
+		gui.Inv.txtLastUser.Text(v.Caller.User)
+	'Function.Intrinsic.Debug.InvokeDebugger
+		'Data does not exist in custom table: insert into it	
+	
+		f.Intrinsic.Control.If(v.Global.iAutoNum,=,0)
+			F.Intrinsic.String.Build("{0}: Data doesn't exist. Adding to table.",V.Ambient.Now,V.Local.sExportData)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+			
+			f.Intrinsic.String.Replace(v.Global.sColumnUsedSelect,"AutoNum,","",v.Local.sColumnsUsedInsert)
+			'Build sValuesInsert
+			f.Intrinsic.String.Build("'{0}'",v.Screen.Inv!txtPO.Text,v.Local.sValuesInsert)	
+			f.Intrinsic.Control.For(v.Local.iCnt,2,v.Global.sGuiControl.UBound,1)
+				F.Intrinsic.Control.If(V.Screen.Inv![v.Global.sGuiControl(V.Local.iCnt)].Text,<>,"")
+					f.Intrinsic.String.Build("{0},'{1}'",v.Local.sValuesInsert,V.Screen.Inv![v.Global.sGuiControl(V.Local.iCnt)].Text,v.Local.sValuesInsert)
+				'Because of how this was programmed need to have conditions for all of the fields that are numeric. So that we set them to numeric instead of blank
+				F.Intrinsic.Control.ElseIf(v.Global.sGuiControl(V.Local.iCnt),=,"txtCE","OR",v.Global.sGuiControl(V.Local.iCnt),=,"txtC",v.Global.sGuiControl(V.Local.iCnt),=,"txtMN")
+					f.Intrinsic.String.Build("{0},'0.0000'",v.Local.sValuesInsert,v.Local.sValuesInsert)
+				F.Intrinsic.Control.ElseIf(v.Global.sGuiControl(V.Local.iCnt),=,"txtP","OR",v.Global.sGuiControl(V.Local.iCnt),=,"txtS",v.Global.sGuiControl(V.Local.iCnt),=,"txtSI")
+					f.Intrinsic.String.Build("{0},'0.0000'",v.Local.sValuesInsert,v.Local.sValuesInsert)
+				F.Intrinsic.Control.ElseIf(v.Global.sGuiControl(V.Local.iCnt),=,"txtCU","OR",v.Global.sGuiControl(V.Local.iCnt),=,"txtNI",v.Global.sGuiControl(V.Local.iCnt),=,"txtCR")
+					f.Intrinsic.String.Build("{0},'0.0000'",v.Local.sValuesInsert,v.Local.sValuesInsert)
+				F.Intrinsic.Control.ElseIf(v.Global.sGuiControl(V.Local.iCnt),=,"txtMO","OR",v.Global.sGuiControl(V.Local.iCnt),=,"txtSN",v.Global.sGuiControl(V.Local.iCnt),=,"txtAL")
+					f.Intrinsic.String.Build("{0},'0.0000'",v.Local.sValuesInsert,v.Local.sValuesInsert)
+				F.Intrinsic.Control.ElseIf(v.Global.sGuiControl(V.Local.iCnt),=,"txtTI","OR",v.Global.sGuiControl(V.Local.iCnt),=,"txtV",v.Global.sGuiControl(V.Local.iCnt),=,"txtCB")
+					f.Intrinsic.String.Build("{0},'0.0000'",v.Local.sValuesInsert,v.Local.sValuesInsert)
+				F.Intrinsic.Control.Else
+					f.Intrinsic.String.Build("{0},' '",v.Local.sValuesInsert,v.Local.sValuesInsert)
+				F.Intrinsic.Control.EndIf
+			f.Intrinsic.Control.Next(v.Local.iCnt)
+		
+			F.Intrinsic.String.Build("Insert into GCG_4729_Part_Dim ({0}) values ({1})",v.Local.sColumnsUsedInsert,v.Local.sValuesInsert,v.Local.sSQL)
+			
+			F.Intrinsic.String.Build("{0}: Query Executed:{1}{2}",V.Ambient.Now,V.Ambient.NewLine,V.Local.sSQL,V.Local.sExportData)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)			
+			f.ODBC.Connection!con.Execute(v.Local.sSQL)
+			
+			F.Intrinsic.String.Build("{0}: Query executed without error.",V.Ambient.Now,V.Ambient.NewLine,V.Local.sSQL,V.Local.sExportData)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+			
+		'Data exist in custom table: Update it
+		f.Intrinsic.Control.Else
+			F.Intrinsic.String.Build("{0}: Data already exists. Updating information.",V.Ambient.Now,V.Local.sExportData)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+			
+			'Build sUpdateSet
+			f.Intrinsic.String.Build("PO = '{0}'",v.Screen.Inv!txtPO.Text,v.Local.sUpdateSet)
+			f.Intrinsic.Control.For(v.Local.iCnt,2,v.Global.sGuiControl.UBound,1)		
+				f.Intrinsic.String.Build("{0}, {1} = '{2}'",v.Local.sUpDateSet,v.Global.sColumns(v.Local.iCnt),V.Screen.Inv![v.Global.sGuiControl(V.Local.iCnt)].Text,v.Local.sUpdateSet)		
+			f.Intrinsic.Control.Next(v.Local.iCnt)	
+		
+			F.Intrinsic.String.Build("Update GCG_4729_Part_Dim Set {0} Where AutoNum = {1}",v.Local.sUpDateSet,V.Global.iAutoNum,v.Local.sSQL)
+			f.ODBC.Connection!con.Execute(v.Local.sSQL)
+			
+			F.Intrinsic.String.Build("{0}: Query Executed:{1}{2}",V.Ambient.Now,V.Ambient.NewLine,V.Local.sSQL,V.Local.sExportData)
+			F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		f.Intrinsic.Control.EndIf
+	
+		f.Intrinsic.Control.CallSub(flag_wait_lotbin_screen)
+		f.ODBC.Connection!con.Close
+		
+		F.Intrinsic.String.Build("{0}: Program Ending",V.Ambient.Now,V.Local.sExportData)
+		F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		
+		F.Intrinsic.Control.End
+	F.Intrinsic.Control.Else
+		F.Intrinsic.String.Build("{0}: Data not good. Nothing saved.",V.Ambient.Now,V.Local.sExportData)
+		F.Intrinsic.File.Append2FileNewLine(V.Local.sExportFile,V.Local.sExportData)
+		
+		F.Intrinsic.UI.Msgbox("Data not good. Cancelling Save")
+	f.Intrinsic.Control.EndIf
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdSave_Click.End
+
+Program.Sub.Validation.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareBoolean(bNumeric)
+
+'Check mandatory fields
+'f.Intrinsic.UI.Msgbox("check mandatory fields")
+'f.Intrinsic.Control.CallSub(CheckMandatory,"sFields","Grade*!*Slab*!*Job*!*Salesman")
+f.Intrinsic.Control.CallSub(CheckMandatory,"sFields","Grade*!*Slab")
+F.Intrinsic.Control.SelectCase(v.Args.MandatoryEmpty)
+	F.Intrinsic.Control.Case("Yes")
+		F.Intrinsic.Variable.AddRV("GoodData","No")
+		f.Intrinsic.Control.ExitSub
+	F.Intrinsic.Control.Case("No")
+		F.Intrinsic.Variable.AddRV("GoodData","Yes")
+F.Intrinsic.Control.EndSelect
+
+'Check numeric
+'f.Intrinsic.Control.CallSub(checknumeric,"YesMsg","Yes","sFields","Thickness*!*Width*!*Length*!*TheoreticalWeight*!*ActualWeight*!*CE*!*C*!*MN*!*P*!*S*!*SI*!*CU*!*NI*!*CR*!*MO*!*SN*!*AL*!*TI*!*V*!*CB")
+
+'F.Intrinsic.Control.SelectCase(v.Args.Is_Numeric)
+'	F.Intrinsic.Control.Case("No")
+'		F.Intrinsic.Variable.AddRV("GoodData","No")
+'		f.Intrinsic.Control.ExitSub
+'	F.Intrinsic.Control.Case("Yes")
+'		F.Intrinsic.Variable.AddRV("GoodData","Yes")
+'F.Intrinsic.Control.EndSelect
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+
+Program.Sub.Validation.End
+
+Program.Sub.CheckNumeric.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError,sFields,sMsg,sTextBox)
+v.Local..BulkDeclareLong(iCnt)
+v.Local..BulkDeclareBoolean(bNumeric)
+
+f.Intrinsic.String.Split(v.Args.sFields,"*!*",v.Local.sFields)
+f.Intrinsic.Control.For(v.Local.iCnt,0,v.Local.sFields.UBound,1)
+	f.Intrinsic.String.Build("txt{0}",v.Local.sFields(v.Local.iCnt),v.Local.sTextBox)
+	f.Intrinsic.Math.IsNumeric(v.Screen.Inv![v.local.sTextBox].Text.Trim,v.Local.bNumeric)
+	f.Intrinsic.Control.If(v.Local.bNumeric,=,False)		
+		f.Intrinsic.Control.If(v.Args.YesMsg,=,"Yes")
+			f.Intrinsic.String.Build("{0} must be numeric",v.Local.sFields(v.Local.iCnt),v.Local.sMsg)
+			f.Intrinsic.UI.Msgbox(v.Local.sMsg,"Invalid data")
+		f.Intrinsic.Control.EndIf
+		F.Intrinsic.Variable.AddRV("Is_Numeric","No")
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.iCnt)
+F.Intrinsic.Variable.AddRV("Is_Numeric","Yes")	
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.CheckNumeric.End
+
+Program.Sub.Calculate_CE.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareFloat(fCE,fHold)
+
+f.Intrinsic.Control.If(v.Global.OnLoadSCR,=,True)
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+
+'Formula = C + MN/6 + (Cr + Mo + V)/5 + (Ni + Cu)/15
+f.Intrinsic.Control.CallSub(checknumeric,"YesMsg","No","sFields","C*!*MN*!*CU*!*NI*!*CR*!*MO*!*V")
+f.Intrinsic.Control.If(v.Args.Is_Numeric,=,"No")
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+
+v.Local.fCE.Set(v.Screen.Inv!txtC.Text.Trim)
+f.Intrinsic.Math.Div(v.Screen.Inv!txtMN.Text.Trim,6,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fCE,v.Local.fHold,v.Local.fCE)
+f.Intrinsic.Math.Add(v.Screen.Inv!txtCr.Text.Trim,v.Screen.Inv!txtMo.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fHold,v.Screen.Inv!txtV.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Div(v.Local.fHold,5,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fCE,v.Local.fHold,v.Local.fCE)
+f.Intrinsic.Math.Add(v.Screen.Inv!txtNi.Text.Trim,v.Screen.Inv!txtCu.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Div(v.Local.fHold,15,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fCE,v.Local.fHold,v.Local.fCE)
+f.Intrinsic.Math.Round(v.Local.fCE,2,v.Local.fCE)
+gui.Inv.txtCE.Text(v.Local.fCE)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Calculate_CE.End
+
+Program.Sub.Calculate_TotalCost_LB.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareFloat(fHold)
+f.Intrinsic.Control.CallSub(checknumeric,"YesMsg","No","sFields","CostLB*!*FreightLB")
+f.Intrinsic.Control.If(v.Args.Is_Numeric,=,"No")
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+
+'Formula = cost/lb + freight cost/lb
+'gui.Inv.txtTotalCostLB.Text("")
+f.Intrinsic.Math.Add(v.Screen.Inv!txtCostLB.Text.Trim,v.Screen.Inv!txtFreightLB.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Round(V.Local.fHold,4,V.Local.fHold)
+gui.Inv.txtTotalCostLB.Text(v.Local.fHold)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.Calculate_TotalCost_LB.End
+
+Program.Sub.Calculate_TotalCost.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareFloat(fCE,fHold)
+f.Intrinsic.Control.CallSub(checknumeric,"YesMsg","No","sFields","TotalCostLB*!*TheoreticalWeight")
+f.Intrinsic.Control.If(v.Args.Is_Numeric,=,"No")
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+'Formula Total Cost/LB * Theoretical weight
+f.Intrinsic.Math.Mult(v.Screen.Inv!txtTotalCostLB.Text.Trim,v.Screen.Inv!txtTheoreticalWeight.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Round(V.Local.fHold,4,V.Local.fHold)
+gui.Inv.txtTotalCost.Text(v.Local.fHold)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.Calculate_TotalCost.End
+
+Program.Sub.Calculate_ActualWeight.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareFloat(fCE,fHold)
+f.Intrinsic.Control.CallSub(checknumeric,"YesMsg","No","sFields","Thickness*!*Width*!*Length")
+f.Intrinsic.Control.If(v.Args.Is_Numeric,=,"No")
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+'Formula = (Thickness x Weight x Length x .2836)
+f.Intrinsic.Math.Mult(v.Screen.Inv!txtThickness.Text.Trim,v.Screen.Inv!txtWidth.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Mult(v.Screen.Inv!txtLength.Text.Trim,v.Local.fHold,v.Local.fHold)
+f.Intrinsic.Math.Mult(v.Local.fHold,0.2836,v.Local.fHold)
+gui.Inv.txtActualWeight.Text(v.Local.fHold)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Calculate_ActualWeight.End
+
+'Program.Sub.Create_Dictionary_Column_DataType.Start
+'F.Intrinsic.Control.Try
+'V.Local..BulkDeclareString(sError)
+'v.Local..BulkDeclareLong(iCnt)
+'
+'f.Intrinsic.Control.For(v.Local.iCnt,0,v.Global.sColumns.UBound,1)
+'	f.Intrinsic.String.Build("{0} {1} {2}",v.Global.sIndexAndColumns,v.Local.iCnt,v.Global.sColumns(v.Local.iCnt),v.Global.sIndexAndColumns)
+'f.Intrinsic.Control.Next(v.Local.iCnt)
+'f.Data.Dictionary.CreateFromSQL("Column_DataType","con","Select ltrim(rtrim(XE$Name)) as Columns, F2.Xe$DataType FROM X$File F1 INNER JOIN X$Field F2 On F2.XE$File = F1.XF$ID where F1.Xf$Name = 'GCG_4729_Part_Dim' and COLUMNS <> 'UK_AutoNum'")
+'f.Data.Dictionary.SetDefaultReturn("Column_DataType",0)
+'
+'F.Intrinsic.Control.Catch
+'	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+'	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+'F.Intrinsic.Control.EndTry
+'
+'Program.Sub.Create_Dictionary_Column_DataType.End
+Program.Sub.DateTime.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError,sDate,sTime,sDateTime)
+
+f.Intrinsic.String.Format(v.Ambient.Date,"YYYY-MM-DD",v.Local.sDate)
+f.Intrinsic.String.Format(v.Ambient.Now,"Hh:Nn:Ss",v.Local.sTime)
+f.Intrinsic.String.Build("{0} {1}",v.Local.sDate,v.Local.sTime,v.Local.sDateTime)
+F.Intrinsic.Variable.AddRV("DateAndTime",v.Local.sDateTime)	
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+
+Program.Sub.DateTime.End
+
+Program.Sub.cmdMTR_Link_Click.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareLong(iPID)
+
+F.Global.DocumentControl.Invoke(v.Screen.Inv!txtMTRLink.Text,31,"Item Lot/Bin document...",V.Local.iPID)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdMTR_Link_Click.End
+
+Program.Sub.cmdTest_Link_Click.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareLong(iPID)
+
+F.Global.DocumentControl.Invoke(v.Screen.Inv!txtMTRLink.Text,2010,"Testing document...",V.Local.iPID)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdTest_Link_Click.End
+
+Program.Sub.cmdBrowseEmp_Click.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError,sRet)
+
+F.Intrinsic.UI.SetBrowserHotTypeAhead(True)
+F.Intrinsic.UI.Browser(51,"",V.Local.sRet)
+F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+	F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+	gui.Inv.txtSalesMan.Text(v.Local.sRet(1))
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdBrowseEmp_Click.End
+
+Program.Sub.CheckMandatory.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError,sFields,sMsg,sTextBox)
+v.Local..BulkDeclareLong(iCnt)
+v.Local..BulkDeclareBoolean(bNumeric)
+
+f.Intrinsic.String.Split(v.Args.sFields,"*!*",v.Local.sFields)
+f.Intrinsic.Control.For(v.Local.iCnt,0,v.Local.sFields.UBound,1)
+	f.Intrinsic.String.Build("txt{0}",v.Local.sFields(v.Local.iCnt),v.Local.sTextBox)
+	f.Intrinsic.Control.if(v.Screen.Inv![v.local.sTextBox].Text.Trim,=,"")
+		f.Intrinsic.String.Replace(v.Local.sTextBox,"txt","",v.Local.sTextBox)
+		f.Intrinsic.String.Build("{0} must have a value",v.Local.sTextBox,v.Local.sMsg)
+		f.Intrinsic.UI.Msgbox(v.Local.sMsg,"Invalid data")
+		F.Intrinsic.Variable.AddRV("MandatoryEmpty","Yes")
+		f.Intrinsic.Control.ExitSub
+	f.Intrinsic.Control.EndIf
+f.Intrinsic.Control.Next(v.Local.iCnt)
+F.Intrinsic.Variable.AddRV("MandatoryEmpty","No")	
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.CheckMandatory.End
+
+Program.Sub.Check_Custom_Table.Start
+f.Intrinsic.Control.Try
+
+v.Local..BulkDeclareString(sError)
+v.Local.bExist.Declare(boolean)
+Function.ODBC.Connection!con.TableExists("GCG_4729_Part_Dim", v.Local.bExist)
+f.Intrinsic.Control.If(v.Local.bExist,=,false)
+	f.Intrinsic.UI.InvokeWaitDialog("Creating Custom Table...")
+	f.ODBC.Connection!con.Execute("CREATE TABLE GCG_4729_Part_Dim( Autonum IDENTITY DEFAULT '0', PO CHAR(7), PO_Line CHAR(3), Receiver CHAR(6), Vendor CHAR(6), Name_Vendor CHAR(30), Part CHAR(20), Loc CHAR(2), Description CHAR(30), Lot CHAR(15), InventoryNumber CHAR(15), Bin CHAR(6), Serial CHAR(30), MTRLink CHAR(88), Grade CHAR(12), Thickness NUMERIC(10,4), Width NUMERIC(10,4), Length NUMERIC(10,4), TheoreticalWeight NUMERIC(10,4), ActualWeight NUMERIC(10,4), CostLB NUMERIC(10,4), FreightLB NUMERIC(10,4), TotalCostLB NUMERIC(10,4), TotalCost NUMERIC(10,4), Mill CHAR(20), CarTruck CHAR(20), BargeNo CHAR(10), LocationNo CHAR(10), WhseLoc CHAR(10), CE NUMERIC(10,4), C NUMERIC(10,4), MN NUMERIC(10,4), P NUMERIC(10,4), S NUMERIC(10,4), SI NUMERIC(10,4), CU NUMERIC(10,4), NI NUMERIC(10,4), CR NUMERIC(10,4), MO NUMERIC(10,4), SN NUMERIC(10,4), AL NUMERIC(10,4), TI NUMERIC(10,4), V NUMERIC(10,4), CB NUMERIC(10,4), Slab CHAR(10), Job CHAR(10), SalesMan CHAR(30), ForeignDomestic CHAR(8), Testing CHAR(3), Notes LONGVARCHAR, LastDateTime CHAR(20), LastUser CHAR(8), Allocated CHAR(8), Validate CHAR(1), Save CHAR(1), Wait CHAR(1), Overwrite BIT, UNIQUE (Autonum));")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_01 USING 1 ON GCG_4729_Part_Dim(PO);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_02 USING 2 ON GCG_4729_Part_Dim(PO_Line);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_03 USING 3 ON GCG_4729_Part_Dim(Receiver);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_04 USING 4 ON GCG_4729_Part_Dim(Part);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_05 USING 5 ON GCG_4729_Part_Dim(Loc);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_06 USING 6 ON GCG_4729_Part_Dim(Lot);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_07 USING 7 ON GCG_4729_Part_Dim(InventoryNumber);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_08 USING 8 ON GCG_4729_Part_Dim(Bin);")
+	f.ODBC.Connection!con.Execute("CREATE INDEX GCG_4729_09 USING 9 ON GCG_4729_Part_Dim(Serial);")	
+
+	f.Intrinsic.UI.CloseWaitDialog
+f.Intrinsic.Control.Endif
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Check_Custom_Table.End
+
+Program.Sub.frmMaint_UnLoad.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+
+
+F.Intrinsic.Control.If(V.DataTable.DTData.Exists)
+	F.Data.DataTable.Close("DTData")
+f.Intrinsic.Control.Endif
+f.ODBC.Connection!con.Close	
+f.Intrinsic.Control.End 
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.frmMaint_UnLoad.End
+
+Program.Sub.cmdCHShow_Click.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+V.Local.sSQL.Declare 
+V.Local.sSlab.Declare
+V.Local.sHeat.Declare
+
+F.Intrinsic.String.RPad(v.screen.frmMaint!txtHeat.Text," ",10,V.Local.sHeat)
+F.Intrinsic.String.RPad(v.screen.frmMaint!txtslab.text," ",15,V.Local.sSlab)
+	
+f.Intrinsic.String.Build("select * from GCG_4729_Maint where slab='{0}' and heat='{1}'",V.Local.sSlab.UCase,V.Local.sHeat.UCase,V.Local.sSQL)
+
+F.Intrinsic.Control.If(V.DataTable.DTData.Exists)
+	F.Data.DataTable.Close("DTData")
+f.Intrinsic.Control.Endif
+
+f.Data.DataTable.CreateFromSQL("DTData","con",v.Local.sSQL,True)
+
+f.Intrinsic.Control.If(v.DataTable.DTData.rowcount,>,0)
+	v.Global.OnLoadSCR.Set(True)
+	gui.frmMaint.txtC.Text(v.DataTable.DTData(0).C!fieldval) 
+	gui.frmMaint.txtMN.Text(v.DataTable.DTData(0).MN!fieldval) 
+	gui.frmMaint.txtP.Text(v.DataTable.DTData(0).P!fieldval) 
+	gui.frmMaint.txtS.Text(v.DataTable.DTData(0).S!fieldval) 
+	gui.frmMaint.txtSI.Text(v.DataTable.DTData(0).SI!fieldval) 
+	gui.frmMaint.txtCU.Text(v.DataTable.DTData(0).CU!fieldval) 
+	gui.frmMaint.txtNI.Text(v.DataTable.DTData(0).NI!fieldval) 
+	gui.frmMaint.txtCR.Text(v.DataTable.DTData(0).CR!fieldval) 
+	gui.frmMaint.txtMO.Text(v.DataTable.DTData(0).MO!fieldval) 
+	gui.frmMaint.txtSN.Text(v.DataTable.DTData(0).SN!fieldval) 
+	gui.frmMaint.txtAL.Text(v.DataTable.DTData(0).AL!fieldval) 
+	gui.frmMaint.txtTI.Text(v.DataTable.DTData(0).TI!fieldval) 
+	gui.frmMaint.txtV.Text(v.DataTable.DTData(0).V!fieldval) 
+	gui.frmMaint.txtCB.Text(v.DataTable.DTData(0).CB!fieldval) 
+	gui.frmMaint.txtCE.Text(v.DataTable.DTData(0).CE!fieldval) 
+	gui.frmMaint.cmdSave.Caption("Modify")
+	v.Global.OnLoadSCR.Set(False)
+f.Intrinsic.Control.Else
+	gui.frmMaint.cmdSave.Caption("Add")
+	GUI.frmMaint.txtC.SetFocus
+f.Intrinsic.Control.Endif
+
+gui.frmMaint.cmdCHShow.Caption("Reset")
+gui.frmMaint.txtHeat.Enabled(false)
+gui.frmMaint.txtslab.Enabled(false)
+
+
+gui.frmMaint.cmdSave.Enabled(true)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdCHShow_Click.End
+
+Program.Sub.cmdSave_Maint.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+
+
+f.Intrinsic.Control.If(v.Screen.frmMaint!cmdSave.Caption,=,"Add")
+	Function.Data.DataTable.AddRowByMap("DTData","Heat*!*Slab*!*C*!*MN*!*P*!*S*!*SI*!*CU*!*NI*!*CR*!*MO*!*SN*!*AL*!*TI*!*V*!*CB*!*CE",v.Screen.frmMaint!txtHeat.text,v.Screen.frmMaint!txtslab.text,v.Screen.frmMaint!txtC.text,v.Screen.frmMaint!txtMN.text,v.Screen.frmMaint!txtP.text,v.Screen.frmMaint!txtS.text,v.Screen.frmMaint!txtSI.text,v.Screen.frmMaint!txtCU.text,v.Screen.frmMaint!txtNI.text,v.Screen.frmMaint!txtCR.text,v.Screen.frmMaint!txtMO.text,v.Screen.frmMaint!txtSN.text,v.Screen.frmMaint!txtAL.text,v.Screen.frmMaint!txtTI.text,v.Screen.frmMaint!txtV.text,v.Screen.frmMaint!txtCB.text,v.Screen.frmMaint!txtCE.text)
+f.Intrinsic.Control.Else
+	Function.Data.DataTable.SetValue("DTData",0,"Heat",v.Screen.frmMaint!txtHeat.text,"Slab",v.Screen.frmMaint!txtslab.text,"C",v.Screen.frmMaint!txtC.text,"MN",v.Screen.frmMaint!txtMN.text,"P",v.Screen.frmMaint!txtP.text,"S",v.Screen.frmMaint!txtS.text,"SI",v.Screen.frmMaint!txtSI.text,"CU",v.Screen.frmMaint!txtCU.text,"NI",v.Screen.frmMaint!txtNI.text,"CR",v.Screen.frmMaint!txtCR.text,"MO",v.Screen.frmMaint!txtMO.text,"SN",v.Screen.frmMaint!txtSN.text,"AL",v.Screen.frmMaint!txtAL.text,"TI",v.Screen.frmMaint!txtTI.text,"V",v.Screen.frmMaint!txtV.text,"CB",v.Screen.frmMaint!txtCB.text,"CE",v.Screen.frmMaint!txtCE.text)
+f.Intrinsic.Control.Endif
+	
+F.Data.DataTable.SaveToDB("DTData","con","GCG_4729_Maint","Slab*!*Heat",256)
+
+gui.frmMaint.cmdSave.Caption("Modify")
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdSave_Maint.End
+
+Program.Sub.cmdBrow_Click.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+V.Local.sSql.Declare 
+V.Local.sRet.Declare
+
+
+	F.Intrinsic.UI.SetBrowserHotTypeAhead(True)
+
+	v.Local.ssql.Set("select distinct heat,slab,slab from GCG_4729_Maint order by heat,slab")
+	F.Intrinsic.UI.Browser("Select","Con",V.Local.sSQL,"Heat*!*Slab*!*","150*!*150*!*0",V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+		F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+
+		gui.frmMaint.txtHeat.Text(V.Local.sRet(0))
+		gui.frmMaint.txtslab.Text(V.Local.sRet(1))
+		f.Intrinsic.Control.CallSub(cmdCHShow_Click)
+'	f.Intrinsic.Control.Else
+'		gui.frmMaint.cmdCHShow.Caption("Display")
+	F.Intrinsic.Control.EndIf
+	
+	
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdBrow_Click.End
+
+Program.Sub.cmdReset.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+
+	F.Intrinsic.Control.If(v.Screen.frmMaint!cmdCHShow.Caption,=,"Reset")
+		v.Global.OnLoadSCR.Set(True)
+		gui.frmMaint.txtHeat.Text("")
+		gui.frmMaint.txtslab.Text("")
+		
+		gui.frmMaint.txtC.Text("0") 
+		gui.frmMaint.txtMN.Text("0") 
+		gui.frmMaint.txtP.Text("0") 
+		gui.frmMaint.txtS.Text("0") 
+		gui.frmMaint.txtSI.Text("0") 
+		gui.frmMaint.txtCU.Text("0") 
+		gui.frmMaint.txtNI.Text("0") 
+		gui.frmMaint.txtCR.Text("0") 
+		gui.frmMaint.txtMO.Text("0") 
+		gui.frmMaint.txtSN.Text("0") 
+		gui.frmMaint.txtAL.Text("0") 
+		gui.frmMaint.txtTI.Text("0") 
+		gui.frmMaint.txtV.Text("0") 
+		gui.frmMaint.txtCB.Text("0") 
+		gui.frmMaint.txtCE.Text("0") 
+		
+		gui.frmMaint.cmdCHShow.Caption("Display")
+		gui.frmMaint.cmdSave.Caption("Add")
+		gui.frmMaint.txtHeat.Enabled(True)
+		gui.frmMaint.txtslab.Enabled(True)
+		gui.frmMaint.cmdSave.Enabled(false)
+		v.Global.OnLoadSCR.Set(False)
+		gui.frmMaint.txtHeat.SetFocus
+	F.Intrinsic.Control.Else
+		f.Intrinsic.Control.CallSub(cmdCHShow_Click)
+	F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdReset.End
+
+Program.Sub.Calculate_CE_Maint.Start
+F.Intrinsic.Control.Try
+V.Local..BulkDeclareString(sError)
+v.Local..BulkDeclareFloat(fCE,fHold)
+
+'Formula = C + MN/6 + (Cr + Mo + V)/5 + (Ni + Cu)/15
+'f.Intrinsic.Control.CallSub(checknumeric,"YesMsg","No","sFields","C*!*MN*!*CU*!*NI*!*CR*!*MO*!*V")
+'f.Intrinsic.Control.If(v.Args.Is_Numeric,=,"No")
+'	f.Intrinsic.Control.ExitSub
+'f.Intrinsic.Control.EndIf
+
+f.Intrinsic.Control.If(v.Global.OnLoadSCR,=,True)
+	f.Intrinsic.Control.ExitSub
+f.Intrinsic.Control.EndIf
+
+v.Local.fCE.Set(v.Screen.frmMaint!txtC.Text.Trim)
+f.Intrinsic.Math.Div(v.Screen.frmMaint!txtMN.Text.Trim,6,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fCE,v.Local.fHold,v.Local.fCE)
+f.Intrinsic.Math.Add(v.Screen.frmMaint!txtCr.Text.Trim,v.Screen.frmMaint!txtMo.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fHold,v.Screen.frmMaint!txtV.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Div(v.Local.fHold,5,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fCE,v.Local.fHold,v.Local.fCE)
+f.Intrinsic.Math.Add(v.Screen.frmMaint!txtNi.Text.Trim,v.Screen.frmMaint!txtCu.Text.Trim,v.Local.fHold)
+f.Intrinsic.Math.Div(v.Local.fHold,15,v.Local.fHold)
+f.Intrinsic.Math.Add(v.Local.fCE,v.Local.fHold,v.Local.fCE)
+f.Intrinsic.Math.Round(v.Local.fCE,2,v.Local.fCE)
+gui.frmMaint.txtCE.Text(v.Local.fCE)
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.Calculate_CE_Maint.End
+
+Program.Sub.cmdINVShowCHMakeup_Click.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+V.Local.sSQL.Declare 
+V.Local.sSlab.Declare 
+V.Local.sHeat.Declare 
+
+'Function.Intrinsic.Debug.InvokeDebugger
+'Function.Intrinsic.Debug.Stop
+
+'Overwrite flag on
+f.Intrinsic.Control.If(v.Screen.Inv!chkOverWrite.Value,=,0)
+
+	F.Intrinsic.String.RPad(v.screen.Inv!txtSlab.Text," ",10,V.Local.sSlab)
+	F.Intrinsic.String.RPad(v.Global.sHeat," ",15,V.Local.sHeat)
+	
+	f.Intrinsic.String.Build("select * from GCG_4729_Maint where slab='{0}' and heat='{1}'",V.Local.sSlab.UCase,V.Local.sHeat.UCase,V.Local.sSQL)
+	
+	F.Intrinsic.Control.If(V.DataTable.DTData.Exists)
+		F.Data.DataTable.Close("DTData")
+	f.Intrinsic.Control.Endif
+	
+	f.Data.DataTable.CreateFromSQL("DTData","con",v.Local.sSQL,True)
+	v.Global.OnLoadSCR.Set(True)
+	f.Intrinsic.Control.If(v.DataTable.DTData.rowcount,>,0)
+		gui.Inv.txtC.Text(v.DataTable.DTData(0).C!fieldval) 
+		gui.Inv.txtMN.Text(v.DataTable.DTData(0).MN!fieldval) 
+		gui.Inv.txtP.Text(v.DataTable.DTData(0).P!fieldval) 
+		gui.Inv.txtS.Text(v.DataTable.DTData(0).S!fieldval) 
+		gui.Inv.txtSI.Text(v.DataTable.DTData(0).SI!fieldval) 
+		gui.Inv.txtCU.Text(v.DataTable.DTData(0).CU!fieldval) 
+		gui.Inv.txtNI.Text(v.DataTable.DTData(0).NI!fieldval) 
+		gui.Inv.txtCR.Text(v.DataTable.DTData(0).CR!fieldval) 
+		gui.Inv.txtMO.Text(v.DataTable.DTData(0).MO!fieldval) 
+		gui.Inv.txtSN.Text(v.DataTable.DTData(0).SN!fieldval) 
+		gui.Inv.txtAL.Text(v.DataTable.DTData(0).AL!fieldval) 
+		gui.Inv.txtTI.Text(v.DataTable.DTData(0).TI!fieldval) 
+		gui.Inv.txtV.Text(v.DataTable.DTData(0).V!fieldval) 
+		gui.Inv.txtCB.Text(v.DataTable.DTData(0).CB!fieldval) 
+		gui.Inv.txtCE.Text(v.DataTable.DTData(0).CE!fieldval) 
+	f.Intrinsic.Control.Else
+		gui.Inv.txtC.Text("0") 
+		gui.Inv.txtMN.Text("0") 
+		gui.Inv.txtP.Text("0") 
+		gui.Inv.txtS.Text("0") 
+		gui.Inv.txtSI.Text("0") 
+		gui.Inv.txtCU.Text("0") 
+		gui.Inv.txtNI.Text("0") 
+		gui.Inv.txtCR.Text("0") 
+		gui.Inv.txtMO.Text("0") 
+		gui.Inv.txtSN.Text("0") 
+		gui.Inv.txtAL.Text("0") 
+		gui.Inv.txtTI.Text("0") 
+		gui.Inv.txtV.Text("0") 
+		gui.Inv.txtCB.Text("0") 
+		gui.Inv.txtCE.Text("0") 
+	f.Intrinsic.Control.Endif
+	v.Global.OnLoadSCR.Set(False)
+f.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdINVShowCHMakeup_Click.End
+
+Program.Sub.chkOverWrite_Click.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+	f.Intrinsic.Control.If(v.Screen.Inv!chkOverWrite.Value,=,1)
+		gui.Inv.txtoverwrite.Text(1)
+	f.Intrinsic.Control.Else
+		gui.Inv.txtoverwrite.Text(0)
+	f.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.chkOverWrite_Click.End
+
+Program.Sub.cmdBrowINV_Click.Start
+f.Intrinsic.Control.Try
+V.Local.sError.Declare 
+V.Local.sSql.Declare 
+V.Local.sRet.Declare
+
+
+	F.Intrinsic.UI.SetBrowserHotTypeAhead(True)
+
+	v.Local.ssql.Set("select distinct heat,slab,slab from GCG_4729_Maint order by heat,slab")
+	F.Intrinsic.UI.Browser("Select","Con",V.Local.sSQL,"Heat*!*Slab*!*","150*!*150*!*0",V.Local.sRet)
+	F.Intrinsic.Control.If(V.Local.sRet,<>,"***CANCEL***")
+		F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+
+		gui.Inv.txtslab.Text(V.Local.sRet(1))
+		f.Intrinsic.Control.CallSub(cmdINVShowCHMakeup_Click)
+'	f.Intrinsic.Control.Else
+'		gui.frmMaint.cmdCHShow.Caption("Display")
+	F.Intrinsic.Control.EndIf
+	
+	
+
+F.Intrinsic.Control.Catch
+	F.Intrinsic.String.Build("Project: {0}{1}{1}Subroutine: {2}{1}Error Occurred {3} with description {4}{1}{1}GAB Version: {5}",V.Ambient.ScriptPath,V.Ambient.Newline,V.Ambient.CurrentSubroutine,V.Ambient.ErrorNumber,V.Ambient.ErrorDescription,V.Ambient.GABVersion,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)	
+F.Intrinsic.Control.EndTry
+Program.Sub.cmdBrowINV_Click.End
+
+Program.Sub.Comments.Start
+${$0$}$$}$$}$10/26/2017 11:03:42 AM$}$False
+${$3$}$0$}$$}$0$}$-1$}$$}$12:00:00 AM$}$This will be a custom GAB script that will run from a custom Menu Item under Bill of Material -> File -> Custom Cobalt BOM Import.  The user will navigate to the xml file that needs to be loaded into Global Shop.  Once the xml is parsed there will be a search in Global Shop to see if a BOM already exists for that Part Number.  If one already exists a compare screen will display showing the differences between the two.  If one does not exist then the screen will display the BOM as it will be uploaded into Global Shop.  Any parts that are listed in the BOM that are not Inventory Parts will be highlighted in Yellow.  If there are any parts not in inventory the user will have the option to click the create Parts button to generate those parts in Global Shop.  If the BOM exists in Global shop then any differences on the new import will be highlighted in Red.  After the Parts have been created then the Upload button will upload and override any previous BOM for that part.}$12:00:00 AM
+Program.Sub.Comments.End
